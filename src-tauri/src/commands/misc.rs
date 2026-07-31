@@ -331,7 +331,11 @@ fn runtime_dependency_version(name: &str) -> Option<String> {
             if output.status.success() {
                 let stdout = decode_command_output(&output.stdout);
                 let stderr = decode_command_output(&output.stderr);
-                let raw = if stdout.trim().is_empty() { stderr } else { stdout };
+                let raw = if stdout.trim().is_empty() {
+                    stderr
+                } else {
+                    stdout
+                };
                 let value = raw.trim();
                 if !value.is_empty() {
                     return Some(value.to_string());
@@ -674,7 +678,10 @@ fn build_tool_lifecycle_command(
         // 仍应让管道前段失败参与整条脚本判定。
         lines.push("set -e".to_string());
         lines.push("set -o pipefail".to_string());
-        lines.push("export PATH=\"$HOME/.draftgo/runtime/node/bin:$HOME/.npm-global/bin:$PATH\"".to_string());
+        lines.push(
+            "export PATH=\"$HOME/.draftgo/runtime/node/bin:$HOME/.npm-global/bin:$PATH\""
+                .to_string(),
+        );
         lines.push("export npm_config_registry=https://registry.npmmirror.com".to_string());
     }
 
