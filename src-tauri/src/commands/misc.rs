@@ -426,7 +426,7 @@ npm --version
 git --version"#;
     let encoded = powershell_encoded_command(script);
     format!(
-        "@echo off\r\npowershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand {encoded}\r\nset \"PATH=%LOCALAPPDATA%\DraftGo\runtime\node;%LOCALAPPDATA%\DraftGo\runtime\git\cmd;%APPDATA%\npm;%PATH%\""
+        "@echo off\r\npowershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand {encoded}\r\nset \"PATH=%LOCALAPPDATA%\\DraftGo\\runtime\\node;%LOCALAPPDATA%\\DraftGo\\runtime\\git\\cmd;%APPDATA%\\npm;%PATH%\""
     )
 }
 
