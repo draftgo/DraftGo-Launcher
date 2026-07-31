@@ -2,7 +2,7 @@
  * 统一供应商（Universal Provider）预设配置
  *
  * 统一供应商是跨应用共享的配置，修改后会自动同步到 Claude、Codex、Gemini 三个应用。
- * 适用于 NewAPI 等支持多种协议的 API 网关。
+ * 适用于支持多种协议的 API 网关。
  */
 
 import type {
@@ -34,12 +34,16 @@ export interface UniversalProviderPreset {
   description?: string;
   /** 是否为自定义模板（允许用户完全自定义） */
   isCustomTemplate?: boolean;
+  /** 预设 API 地址；快速配置时不允许用户修改 */
+  defaultBaseUrl?: string;
+  /** 仅展示 API Key 输入，其他配置使用预设值 */
+  quickSetup?: boolean;
 }
 
 /**
- * NewAPI 默认模型配置
+ * API 网关默认模型配置
  */
-const NEWAPI_DEFAULT_MODELS: UniversalProviderModels = {
+const DEFAULT_GATEWAY_MODELS: UniversalProviderModels = {
   claude: {
     model: "claude-sonnet-5",
     haikuModel: "claude-haiku-4-5-20251001",
@@ -60,19 +64,18 @@ const NEWAPI_DEFAULT_MODELS: UniversalProviderModels = {
  */
 export const universalProviderPresets: UniversalProviderPreset[] = [
   {
-    name: "NewAPI",
-    providerType: "newapi",
+    name: "DraftGo API",
+    providerType: "draftgo",
     defaultApps: {
       claude: true,
       codex: true,
       gemini: true,
     },
-    defaultModels: NEWAPI_DEFAULT_MODELS,
-    websiteUrl: "https://www.newapi.pro",
-    icon: "newapi",
-    iconColor: "#00A67E",
-    description:
-      "NewAPI 是一个可自部署的 API 网关，支持 Anthropic、OpenAI、Gemini 等多种协议",
+    defaultModels: DEFAULT_GATEWAY_MODELS,
+    websiteUrl: "https://draftgo.cn",
+    description: "输入 DraftGo API Key 即可同步到所有支持的应用",
+    defaultBaseUrl: "https://api.draftgo.cn",
+    quickSetup: true,
   },
   {
     name: "自定义网关",
@@ -82,7 +85,7 @@ export const universalProviderPresets: UniversalProviderPreset[] = [
       codex: true,
       gemini: true,
     },
-    defaultModels: NEWAPI_DEFAULT_MODELS,
+    defaultModels: DEFAULT_GATEWAY_MODELS,
     icon: "openai",
     iconColor: "#6366F1",
     description: "自定义配置的 API 网关",

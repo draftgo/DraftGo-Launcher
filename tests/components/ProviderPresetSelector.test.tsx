@@ -113,9 +113,11 @@ function getIds(entries: ReadonlyArray<{ id: string }>) {
 function renderSelector({
   entries = presetEntries,
   onPresetChange = vi.fn(),
+  officialOnly = false,
 }: {
   entries?: TestPresetEntry[];
   onPresetChange?: (value: string) => void;
+  officialOnly?: boolean;
 } = {}) {
   const Wrapper = () => {
     const form = useForm();
@@ -127,6 +129,7 @@ function renderSelector({
           presetEntries={entries}
           presetCategoryLabels={presetCategoryLabels}
           onPresetChange={onPresetChange}
+          officialOnly={officialOnly}
         />
       </Form>
     );
@@ -324,6 +327,18 @@ describe("ProviderPresetSelector pure helpers", () => {
 });
 
 describe("ProviderPresetSelector", () => {
+  it("仅显示厂商官方和官方云供应商预设", () => {
+    renderSelector({ officialOnly: true });
+
+    expect(getPresetButtonTexts()).toEqual([
+      "providerPreset.custom",
+      "preset.alpha",
+      "Beta Gateway",
+    ]);
+    expect(screen.queryByText("Delta Mirror")).not.toBeInTheDocument();
+    expect(screen.queryByText("preset.gamma")).not.toBeInTheDocument();
+  });
+
   it("默认（original 模式）将官方分类置顶，非赞助商按显示名排序", () => {
     renderSelector();
 

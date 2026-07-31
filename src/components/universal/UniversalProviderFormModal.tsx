@@ -86,7 +86,7 @@ export function UniversalProviderFormModal({
       const defaultPreset = initialPreset || universalProviderPresets[0];
       setSelectedPreset(defaultPreset);
       setName(defaultPreset.name);
-      setBaseUrl("");
+      setBaseUrl(defaultPreset.defaultBaseUrl || "");
       setApiKey("");
       setWebsiteUrl(defaultPreset.websiteUrl || "");
       setNotes("");
@@ -103,6 +103,8 @@ export function UniversalProviderFormModal({
       setSelectedPreset(preset);
       if (!isEditMode) {
         setName(preset.name);
+        setBaseUrl(preset.defaultBaseUrl || "");
+        setWebsiteUrl(preset.websiteUrl || "");
         setClaudeEnabled(preset.defaultApps.claude);
         setCodexEnabled(preset.defaultApps.codex);
         setGeminiEnabled(preset.defaultApps.gemini);
@@ -111,6 +113,8 @@ export function UniversalProviderFormModal({
     },
     [isEditMode],
   );
+
+  const isQuickSetup = selectedPreset?.quickSetup === true;
 
   // 更新模型配置
   const updateModel = useCallback(
@@ -160,7 +164,7 @@ model_reasoning_effort = "${reasoningEffort}"
 disable_response_storage = true
 
 [model_providers.custom]
-name = "NewAPI"
+name = "${name || selectedPreset?.name || "Custom"}"
 base_url = "${codexBaseUrl}"
 wire_api = "responses"
 requires_openai_auth = true`;
@@ -170,7 +174,7 @@ requires_openai_auth = true`;
       },
       config: configToml,
     };
-  }, [codexEnabled, baseUrl, apiKey, models.codex]);
+  }, [codexEnabled, baseUrl, apiKey, models.codex, name, selectedPreset]);
 
   // 计算 Gemini 配置 JSON 预览
   const geminiConfigJson = useMemo(() => {
@@ -394,31 +398,35 @@ requires_openai_auth = true`;
 
         {/* 基本信息 */}
         <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="name">
-              {t("universalProvider.name", { defaultValue: "名称" })}
-            </Label>
-            <Input
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder={t("universalProvider.namePlaceholder", {
-                defaultValue: "例如：我的 NewAPI",
-              })}
-            />
-          </div>
+          {!isQuickSetup && (
+            <>
+              <div className="space-y-2">
+                <Label htmlFor="name">
+                  {t("universalProvider.name", { defaultValue: "名称" })}
+                </Label>
+                <Input
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder={t("universalProvider.namePlaceholder", {
+                    defaultValue: "例如：我的 API 服务",
+                  })}
+                />
+              </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="baseUrl">
-              {t("universalProvider.baseUrl", { defaultValue: "API 地址" })}
-            </Label>
-            <Input
-              id="baseUrl"
-              value={baseUrl}
-              onChange={(e) => setBaseUrl(e.target.value)}
-              placeholder="https://api.example.com"
-            />
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="baseUrl">
+                  {t("universalProvider.baseUrl", { defaultValue: "API 地址" })}
+                </Label>
+                <Input
+                  id="baseUrl"
+                  value={baseUrl}
+                  onChange={(e) => setBaseUrl(e.target.value)}
+                  placeholder="https://api.example.com"
+                />
+              </div>
+            </>
+          )}
 
           <div className="space-y-2">
             <Label htmlFor="apiKey">
@@ -449,78 +457,90 @@ requires_openai_auth = true`;
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="websiteUrl">
-              {t("universalProvider.websiteUrl", { defaultValue: "官网地址" })}
-            </Label>
-            <Input
-              id="websiteUrl"
-              value={websiteUrl}
-              onChange={(e) => setWebsiteUrl(e.target.value)}
-              placeholder={t("universalProvider.websiteUrlPlaceholder", {
-                defaultValue: "https://example.com（可选，用于在列表中显示）",
-              })}
-            />
-          </div>
+          {!isQuickSetup && (
+            <>
+              <div className="space-y-2">
+                <Label htmlFor="websiteUrl">
+                  {t("universalProvider.websiteUrl", {
+                    defaultValue: "官网地址",
+                  })}
+                </Label>
+                <Input
+                  id="websiteUrl"
+                  value={websiteUrl}
+                  onChange={(e) => setWebsiteUrl(e.target.value)}
+                  placeholder={t("universalProvider.websiteUrlPlaceholder", {
+                    defaultValue: "https://example.com（可选，用于在列表中显示）",
+                  })}
+                />
+              </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="notes">
-              {t("universalProvider.notes", { defaultValue: "备注" })}
-            </Label>
-            <Input
-              id="notes"
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              placeholder={t("universalProvider.notesPlaceholder", {
-                defaultValue: "可选：添加备注信息",
-              })}
-            />
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="notes">
+                  {t("universalProvider.notes", { defaultValue: "备注" })}
+                </Label>
+                <Input
+                  id="notes"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  placeholder={t("universalProvider.notesPlaceholder", {
+                    defaultValue: "可选：添加备注信息",
+                  })}
+                />
+              </div>
+            </>
+          )}
         </div>
 
         {/* 应用启用 */}
-        <div className="space-y-3">
-          <Label>
-            {t("universalProvider.enabledApps", { defaultValue: "启用的应用" })}
-          </Label>
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between rounded-lg border p-3">
-              <div className="flex items-center gap-2">
-                <ProviderIcon icon="claude" name="Claude" size={20} />
-                <span className="font-medium">Claude Code</span>
+        {!isQuickSetup && (
+          <div className="space-y-3">
+            <Label>
+              {t("universalProvider.enabledApps", {
+                defaultValue: "启用的应用",
+              })}
+            </Label>
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between rounded-lg border p-3">
+                <div className="flex items-center gap-2">
+                  <ProviderIcon icon="claude" name="Claude" size={20} />
+                  <span className="font-medium">Claude Code</span>
+                </div>
+                <Switch
+                  checked={claudeEnabled}
+                  onCheckedChange={setClaudeEnabled}
+                />
               </div>
-              <Switch
-                checked={claudeEnabled}
-                onCheckedChange={setClaudeEnabled}
-              />
-            </div>
-            <div className="flex items-center justify-between rounded-lg border p-3">
-              <div className="flex items-center gap-2">
-                <ProviderIcon icon="openai" name="Codex" size={20} />
-                <span className="font-medium">OpenAI Codex</span>
+              <div className="flex items-center justify-between rounded-lg border p-3">
+                <div className="flex items-center gap-2">
+                  <ProviderIcon icon="openai" name="Codex" size={20} />
+                  <span className="font-medium">OpenAI Codex</span>
+                </div>
+                <Switch
+                  checked={codexEnabled}
+                  onCheckedChange={setCodexEnabled}
+                />
               </div>
-              <Switch
-                checked={codexEnabled}
-                onCheckedChange={setCodexEnabled}
-              />
-            </div>
-            <div className="flex items-center justify-between rounded-lg border p-3">
-              <div className="flex items-center gap-2">
-                <ProviderIcon icon="gemini" name="Gemini" size={20} />
-                <span className="font-medium">Gemini CLI</span>
+              <div className="flex items-center justify-between rounded-lg border p-3">
+                <div className="flex items-center gap-2">
+                  <ProviderIcon icon="gemini" name="Gemini" size={20} />
+                  <span className="font-medium">Gemini CLI</span>
+                </div>
+                <Switch
+                  checked={geminiEnabled}
+                  onCheckedChange={setGeminiEnabled}
+                />
               </div>
-              <Switch
-                checked={geminiEnabled}
-                onCheckedChange={setGeminiEnabled}
-              />
             </div>
           </div>
-        </div>
+        )}
 
         {/* 模型配置 */}
-        <div className="space-y-4">
+        <div className={isQuickSetup ? "hidden" : "space-y-4"}>
           <Label>
-            {t("universalProvider.modelConfig", { defaultValue: "模型配置" })}
+            {t("universalProvider.modelConfig", {
+              defaultValue: "模型配置",
+            })}
           </Label>
 
           {/* Claude 模型 */}
@@ -636,7 +656,7 @@ requires_openai_auth = true`;
 
         {/* 配置 JSON 预览 */}
         {isEditMode && (claudeEnabled || codexEnabled || geminiEnabled) && (
-          <div className="space-y-4">
+          <div className={isQuickSetup ? "hidden" : "space-y-4"}>
             <Label>
               {t("universalProvider.configJsonPreview", {
                 defaultValue: "配置 JSON 预览",

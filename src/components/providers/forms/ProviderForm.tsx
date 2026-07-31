@@ -1969,6 +1969,7 @@ function ProviderFormFull({
               onUniversalPresetSelect={onUniversalPresetSelect}
               onManageUniversalProviders={onManageUniversalProviders}
               category={category}
+              officialOnly
             />
           )}
 

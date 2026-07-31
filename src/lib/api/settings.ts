@@ -253,6 +253,18 @@ export const settingsApi = {
     return await invoke("get_tool_versions", { tools, wslShellByTool });
   },
 
+  async getRuntimeDependencies(): Promise<
+    Array<{ name: string; version: string | null; installed: boolean }>
+  > {
+    return await invoke("get_runtime_dependencies");
+  },
+
+  async installRuntimeDependencies(): Promise<
+    Array<{ name: string; version: string | null; installed: boolean }>
+  > {
+    return await invoke("install_runtime_dependencies");
+  },
+
   async runToolLifecycleAction(
     tools: string[],
     action: "install" | "update",

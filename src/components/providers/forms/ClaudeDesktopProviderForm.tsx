@@ -841,6 +841,7 @@ export function ClaudeDesktopProviderForm({
             presetCategoryLabels={presetCategoryLabels}
             onPresetChange={handlePresetChange}
             category={activePreset?.category}
+            officialOnly
           />
         )}
 

@@ -109,6 +109,18 @@ export function AddProviderDialog({
     setSelectedUniversalPreset(null);
   }, []);
 
+  const handleUniversalPresetSelect = useCallback(
+    (preset: UniversalProviderPreset) => {
+      setSelectedUniversalPreset(preset);
+      setUniversalFormOpen(true);
+    },
+    [],
+  );
+
+  const handleManageUniversalProviders = useCallback(() => {
+    setActiveTab("universal");
+  }, []);
+
   const handleSubmit = useCallback(
     async (values: ProviderFormValues) => {
       const parsedConfig = JSON.parse(values.settingsConfig) as Record<
@@ -390,6 +402,8 @@ export function AddProviderDialog({
               onSubmit={handleSubmit}
               onCancel={() => onOpenChange(false)}
               onSubmittingChange={setIsFormSubmitting}
+              onUniversalPresetSelect={handleUniversalPresetSelect}
+              onManageUniversalProviders={handleManageUniversalProviders}
               showButtons={false}
             />
           </TabsContent>

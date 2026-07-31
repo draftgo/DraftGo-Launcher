@@ -1555,6 +1555,8 @@ pub fn run() {
             commands::launch_session_terminal,
             commands::get_tool_versions,
             commands::run_tool_lifecycle_action,
+            commands::get_runtime_dependencies,
+            commands::install_runtime_dependencies,
             commands::probe_tool_installations,
             // Provider terminal
             commands::open_provider_terminal,

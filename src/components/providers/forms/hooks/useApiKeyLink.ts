@@ -25,6 +25,38 @@ interface UseApiKeyLinkProps {
   formWebsiteUrl: string;
 }
 
+const TRACKING_QUERY_KEYS = new Set([
+  "ac",
+  "aff",
+  "affiliate",
+  "ch",
+  "from",
+  "invitecode",
+  "ref",
+  "rc",
+  "source",
+]);
+
+export function removeTrackingParameters(value: string): string {
+  if (!value) return value;
+
+  try {
+    const url = new URL(value);
+    for (const key of [...url.searchParams.keys()]) {
+      const normalizedKey = key.toLowerCase();
+      if (
+        TRACKING_QUERY_KEYS.has(normalizedKey) ||
+        normalizedKey.startsWith("utm_")
+      ) {
+        url.searchParams.delete(key);
+      }
+    }
+    return url.toString();
+  } catch {
+    return value;
+  }
+}
+
 /**
  * 管理 API Key 获取链接的显示和 URL
  */
@@ -57,27 +89,20 @@ export function useApiKeyLink({
   const getWebsiteUrl = useMemo(() => {
     if (currentPresetEntry) {
       const preset = currentPresetEntry.preset;
-      // 对于 cn_official、aggregator、third_party，优先使用 apiKeyUrl（可能包含推广参数）
+      // 官方预设优先使用专用 API Key 页面，并移除推广追踪参数。
       if (
         preset.category === "cn_official" ||
         preset.category === "aggregator" ||
         preset.category === "third_party"
       ) {
-        return preset.apiKeyUrl || preset.websiteUrl || "";
+        return removeTrackingParameters(
+          preset.apiKeyUrl || preset.websiteUrl || "",
+        );
       }
-      return preset.websiteUrl || "";
+      return removeTrackingParameters(preset.websiteUrl || "");
     }
-    return formWebsiteUrl || "";
+    return removeTrackingParameters(formWebsiteUrl || "");
   }, [currentPresetEntry, formWebsiteUrl]);
-
-  // 提取合作伙伴信息
-  const isPartner = useMemo(() => {
-    return currentPresetEntry?.preset.isPartner ?? false;
-  }, [currentPresetEntry]);
-
-  const partnerPromotionKey = useMemo(() => {
-    return currentPresetEntry?.preset.partnerPromotionKey;
-  }, [currentPresetEntry]);
 
   return {
     shouldShowApiKeyLink:
@@ -91,7 +116,7 @@ export function useApiKeyLink({
         ? shouldShowApiKeyLink
         : false,
     websiteUrl: getWebsiteUrl,
-    isPartner,
-    partnerPromotionKey,
+    isPartner: false,
+    partnerPromotionKey: undefined,
   };
 }

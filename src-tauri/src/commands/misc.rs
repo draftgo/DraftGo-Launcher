@@ -111,6 +111,15 @@ pub struct ToolVersion {
     wsl_distro: Option<String>,
 }
 
+#[derive(Debug, serde::Serialize)]
+pub struct RuntimeDependencyStatus {
+    name: String,
+    version: Option<String>,
+    installed: bool,
+}
+
+const RUNTIME_DEPENDENCIES: [&str; 3] = ["node", "npm", "git"];
+
 const VALID_TOOLS: [&str; 7] = [
     "claude", "codex", "gemini", "grok", "opencode", "openclaw", "hermes",
 ];
@@ -197,12 +206,290 @@ pub async fn run_tool_lifecycle_action(
     // build 阶段含锚定探测（对每个工具跑 `--version` 定位命令行实际命中那处），
     // 与执行一并放进 blocking 线程，避免阻塞 async runtime。
     tokio::task::spawn_blocking(move || {
+        if matches!(action, ToolLifecycleAction::Install) {
+            ensure_runtime_dependencies()?;
+        }
         let command_line =
             build_tool_lifecycle_command(&requested, action, wsl_shell_by_tool.as_ref())?;
         run_tool_lifecycle_silently(&command_line, label)
     })
     .await
     .map_err(|e| format!("tool lifecycle task join error: {e}"))?
+}
+
+#[tauri::command]
+pub async fn get_runtime_dependencies() -> Result<Vec<RuntimeDependencyStatus>, String> {
+    tokio::task::spawn_blocking(|| {
+        RUNTIME_DEPENDENCIES
+            .iter()
+            .map(|name| runtime_dependency_status(name))
+            .collect()
+    })
+    .await
+    .map_err(|e| format!("runtime dependency probe task join error: {e}"))
+}
+
+#[tauri::command]
+pub async fn install_runtime_dependencies() -> Result<Vec<RuntimeDependencyStatus>, String> {
+    tokio::task::spawn_blocking(|| {
+        ensure_runtime_dependencies()?;
+        Ok(RUNTIME_DEPENDENCIES
+            .iter()
+            .map(|name| runtime_dependency_status(name))
+            .collect())
+    })
+    .await
+    .map_err(|e| format!("runtime dependency install task join error: {e}"))?
+}
+
+fn runtime_dependency_status(name: &str) -> RuntimeDependencyStatus {
+    let version = runtime_dependency_version(name);
+    let installed = match (name, version.as_deref()) {
+        ("node", Some(value)) => node_version_is_supported(value),
+        ("npm", Some(_)) => runtime_dependency_version("node")
+            .as_deref()
+            .is_some_and(node_version_is_supported),
+        (_, Some(_)) => true,
+        (_, None) => false,
+    };
+    RuntimeDependencyStatus {
+        name: name.to_string(),
+        installed,
+        version,
+    }
+}
+
+fn node_version_is_supported(version: &str) -> bool {
+    version
+        .trim()
+        .trim_start_matches('v')
+        .split('.')
+        .next()
+        .and_then(|major| major.parse::<u32>().ok())
+        .is_some_and(|major| major >= 20)
+}
+
+fn runtime_dependency_version(name: &str) -> Option<String> {
+    let arg = "--version";
+    let mut candidates = Vec::new();
+
+    #[cfg(target_os = "windows")]
+    {
+        let executable = format!("{name}.exe");
+        let command = format!("{name}.cmd");
+        if let Some(local) = std::env::var_os("LOCALAPPDATA") {
+            let runtime = PathBuf::from(local).join("DraftGo").join("runtime");
+            candidates.push(runtime.join("node").join(&executable));
+            candidates.push(runtime.join("node").join(&command));
+            candidates.push(runtime.join("git").join("cmd").join(&executable));
+        }
+        if let Some(program_files) = std::env::var_os("ProgramFiles") {
+            let root = PathBuf::from(program_files);
+            candidates.push(root.join("nodejs").join(&executable));
+            candidates.push(root.join("nodejs").join(&command));
+            candidates.push(root.join("Git").join("cmd").join(&executable));
+        }
+    }
+
+    #[cfg(not(target_os = "windows"))]
+    if let Some(home) = dirs::home_dir() {
+        candidates.push(
+            home.join(".draftgo")
+                .join("runtime")
+                .join("node")
+                .join("bin")
+                .join(name),
+        );
+    }
+
+    candidates.push(PathBuf::from(name));
+    for candidate in candidates {
+        #[cfg(target_os = "windows")]
+        let mut command = {
+            let is_batch = candidate
+                .extension()
+                .is_some_and(|extension| extension.eq_ignore_ascii_case("cmd"));
+            if is_batch {
+                let mut command = std::process::Command::new("cmd");
+                command.arg("/C").arg(&candidate).arg(arg);
+                command
+            } else {
+                let mut command = std::process::Command::new(&candidate);
+                command.arg(arg);
+                command
+            }
+        };
+        #[cfg(not(target_os = "windows"))]
+        let mut command = {
+            let mut command = std::process::Command::new(&candidate);
+            command.arg(arg);
+            command
+        };
+        #[cfg(target_os = "windows")]
+        command.creation_flags(CREATE_NO_WINDOW);
+        if let Ok(output) = command.output() {
+            if output.status.success() {
+                let stdout = decode_command_output(&output.stdout);
+                let stderr = decode_command_output(&output.stderr);
+                let raw = if stdout.trim().is_empty() { stderr } else { stdout };
+                let value = raw.trim();
+                if !value.is_empty() {
+                    return Some(value.to_string());
+                }
+            }
+        }
+    }
+    None
+}
+
+fn ensure_runtime_dependencies() -> Result<(), String> {
+    if RUNTIME_DEPENDENCIES
+        .iter()
+        .all(|name| runtime_dependency_status(name).installed)
+    {
+        return Ok(());
+    }
+
+    let command = runtime_bootstrap_command();
+    run_tool_lifecycle_silently(&command, "runtime_bootstrap")?;
+
+    let missing: Vec<&str> = RUNTIME_DEPENDENCIES
+        .iter()
+        .copied()
+        .filter(|name| !runtime_dependency_status(name).installed)
+        .collect();
+    if missing.is_empty() {
+        Ok(())
+    } else {
+        Err(format!(
+            "基础环境安装后仍无法识别: {}。请重新启动 DraftGo Launcher 后重试",
+            missing.join(", ")
+        ))
+    }
+}
+
+#[cfg(target_os = "windows")]
+fn runtime_bootstrap_command() -> String {
+    let script = r#"$ErrorActionPreference = 'Stop'
+$runtime = Join-Path $env:LOCALAPPDATA 'DraftGo\runtime'
+New-Item -ItemType Directory -Force -Path $runtime | Out-Null
+function Add-UserPath([string]$path) {
+  $current = [Environment]::GetEnvironmentVariable('Path', 'User')
+  $parts = @($current -split ';' | Where-Object { $_ })
+  if ($parts -notcontains $path) {
+    [Environment]::SetEnvironmentVariable('Path', (($parts + $path) -join ';'), 'User')
+  }
+}
+if (-not (Get-Command node -ErrorAction SilentlyContinue) -or [int]((node --version).TrimStart('v').Split('.')[0]) -lt 20) {
+  $arch = if ($env:PROCESSOR_ARCHITECTURE -eq 'ARM64') { 'arm64' } else { 'x64' }
+  $fileKind = "win-$arch-zip"
+  $release = Invoke-RestMethod 'https://npmmirror.com/mirrors/node/index.json' |
+    Where-Object { $_.lts -and $_.files -contains $fileKind } | Select-Object -First 1
+  if (-not $release) { throw 'npmmirror 中没有可用的 Node.js LTS 版本' }
+  $zip = Join-Path $env:TEMP 'draftgo-node.zip'
+  $stage = Join-Path $env:TEMP 'draftgo-node-stage'
+  Remove-Item -Recurse -Force $stage -ErrorAction SilentlyContinue
+  Invoke-WebRequest -UseBasicParsing -Uri ("https://npmmirror.com/mirrors/node/{0}/node-{0}-win-{1}.zip" -f $release.version, $arch) -OutFile $zip
+  Expand-Archive -Force -Path $zip -DestinationPath $stage
+  $nodeDir = Join-Path $runtime 'node'
+  Remove-Item -Recurse -Force $nodeDir -ErrorAction SilentlyContinue
+  Move-Item -Path (Get-ChildItem -Directory $stage | Select-Object -First 1).FullName -Destination $nodeDir
+  Remove-Item -Force $zip -ErrorAction SilentlyContinue
+  Remove-Item -Recurse -Force $stage -ErrorAction SilentlyContinue
+}
+$nodeDir = Join-Path $runtime 'node'
+$npmBin = Join-Path $env:APPDATA 'npm'
+Add-UserPath $nodeDir
+Add-UserPath $npmBin
+$env:Path = "$nodeDir;$npmBin;$env:Path"
+if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+  $arch = if ($env:PROCESSOR_ARCHITECTURE -eq 'ARM64') { 'arm64' } else { '64-bit' }
+  $root = Invoke-RestMethod 'https://registry.npmmirror.com/-/binary/git-for-windows/'
+  $release = $root | Where-Object { $_.type -eq 'dir' -and $_.name -match '^v[0-9]+\.[0-9]+\.[0-9]+\.windows\.[0-9]+/$' } |
+    Sort-Object date -Descending | Select-Object -First 1
+  if (-not $release) { throw 'npmmirror 中没有可用的 Git for Windows 版本' }
+  $asset = Invoke-RestMethod $release.url | Where-Object { $_.name -match ("^MinGit-.*-{0}\.zip$" -f $arch) } | Select-Object -First 1
+  if (-not $asset) { throw 'npmmirror 中没有匹配当前架构的 MinGit' }
+  $zip = Join-Path $env:TEMP 'draftgo-git.zip'
+  $gitDir = Join-Path $runtime 'git'
+  Invoke-WebRequest -UseBasicParsing -Uri $asset.url -OutFile $zip
+  Remove-Item -Recurse -Force $gitDir -ErrorAction SilentlyContinue
+  Expand-Archive -Force -Path $zip -DestinationPath $gitDir
+  Remove-Item -Force $zip -ErrorAction SilentlyContinue
+}
+$gitBin = Join-Path $runtime 'git\cmd'
+Add-UserPath $gitBin
+$env:Path = "$gitBin;$env:Path"
+npm config set registry https://registry.npmmirror.com
+node --version
+npm --version
+git --version"#;
+    let encoded = powershell_encoded_command(script);
+    format!(
+        "@echo off\r\npowershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand {encoded}\r\nset \"PATH=%LOCALAPPDATA%\DraftGo\runtime\node;%LOCALAPPDATA%\DraftGo\runtime\git\cmd;%APPDATA%\npm;%PATH%\""
+    )
+}
+
+#[cfg(not(target_os = "windows"))]
+fn runtime_bootstrap_command() -> String {
+    r#"set -e
+set -o pipefail
+runtime="$HOME/.draftgo/runtime"
+mkdir -p "$runtime"
+if ! command -v node >/dev/null 2>&1 || [ "$(node --version 2>/dev/null | sed 's/^v//' | cut -d. -f1)" -lt 20 ]; then
+  arch=$(uname -m)
+  case "$arch" in arm64|aarch64) node_arch=arm64 ;; x86_64|amd64) node_arch=x64 ;; *) echo "Unsupported architecture: $arch" >&2; exit 1 ;; esac
+  version=$(curl -fsSL https://npmmirror.com/mirrors/node/index.json | sed -n 's/.*"version":"\(v[0-9.]*\)".*"lts":[^f][^,}]*/\1/p' | head -n 1)
+  test -n "$version"
+  archive=$(mktemp)
+  if [ "$(uname -s)" = "Darwin" ]; then
+    node_platform=darwin
+    node_ext=tar.gz
+    tar_args=-xzf
+  else
+    node_platform=linux
+    node_ext=tar.xz
+    tar_args=-xJf
+  fi
+  curl -fsSL "https://npmmirror.com/mirrors/node/$version/node-$version-$node_platform-$node_arch.$node_ext" -o "$archive"
+  rm -rf "$runtime/node" "$runtime/node-stage"
+  mkdir -p "$runtime/node-stage"
+  tar $tar_args "$archive" -C "$runtime/node-stage" --strip-components=1
+  mv "$runtime/node-stage" "$runtime/node"
+  rm -f "$archive"
+fi
+export PATH="$runtime/node/bin:$HOME/.npm-global/bin:$PATH"
+profile="$HOME/.profile"
+marker='export PATH="$HOME/.draftgo/runtime/node/bin:$HOME/.npm-global/bin:$PATH"'
+grep -Fqx "$marker" "$profile" 2>/dev/null || printf '\n%s\n' "$marker" >> "$profile"
+if [ "$(uname -s)" = "Darwin" ]; then
+  grep -Fqx "$marker" "$HOME/.zprofile" 2>/dev/null || printf '\n%s\n' "$marker" >> "$HOME/.zprofile"
+fi
+npm config set prefix "$HOME/.npm-global"
+npm config set registry https://registry.npmmirror.com
+if ! git --version >/dev/null 2>&1; then
+  if command -v brew >/dev/null 2>&1; then
+    HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles brew install git
+  elif command -v pkexec >/dev/null 2>&1 && command -v apt-get >/dev/null 2>&1; then
+    pkexec sh -c 'apt-get update && apt-get install -y git'
+  elif command -v sudo >/dev/null 2>&1 && command -v apt-get >/dev/null 2>&1; then
+    sudo apt-get update && sudo apt-get install -y git
+  elif command -v sudo >/dev/null 2>&1 && command -v dnf >/dev/null 2>&1; then
+    sudo dnf install -y git
+  elif command -v sudo >/dev/null 2>&1 && command -v pacman >/dev/null 2>&1; then
+    sudo pacman -S --noconfirm git
+  elif [ "$(uname -s)" = "Darwin" ]; then
+    xcode-select --install || true
+    echo '已启动 Apple 命令行工具安装，请完成系统安装窗口后重试' >&2
+    exit 1
+  else
+    echo '无法自动安装 Git：未找到支持的系统包管理器' >&2
+    exit 1
+  fi
+fi
+node --version
+npm --version
+git --version"#.to_string()
 }
 
 /// 静默执行工具安装/更新脚本：直接捕获子进程输出并阻塞到命令真正结束，
@@ -387,10 +674,16 @@ fn build_tool_lifecycle_command(
         // 仍应让管道前段失败参与整条脚本判定。
         lines.push("set -e".to_string());
         lines.push("set -o pipefail".to_string());
+        lines.push("export PATH=\"$HOME/.draftgo/runtime/node/bin:$HOME/.npm-global/bin:$PATH\"".to_string());
+        lines.push("export npm_config_registry=https://registry.npmmirror.com".to_string());
     }
 
     #[cfg(target_os = "windows")]
-    lines.push("@echo off".to_string());
+    {
+        lines.push("@echo off".to_string());
+        lines.push("set \"PATH=%LOCALAPPDATA%\\DraftGo\\runtime\\node;%LOCALAPPDATA%\\DraftGo\\runtime\\git\\cmd;%APPDATA%\\npm;%PATH%\"".to_string());
+        lines.push("set \"npm_config_registry=https://registry.npmmirror.com\"".to_string());
+    }
 
     for tool in tools {
         let label = tool_display_name(tool);
@@ -437,27 +730,18 @@ fn tool_display_name(tool: &str) -> &'static str {
 /// `wsl.exe ... -- sh -c "<cmd>"` 子 shell 里执行命令,外层脚本的 `set -o pipefail`
 /// 不会继承进去;而 WSL 默认 shell 可能是 dash/ash,也不能假设支持 `set -o pipefail`。
 /// 先下载到 mktemp 文件再交给 bash,能让 curl 失败稳定变成整条命令失败。
-const CLAUDE_INSTALL_UNIX: &str =
-    "bash -c 'tmp=$(mktemp) && curl -fsSL https://claude.ai/install.sh -o $tmp && bash $tmp; status=$?; rm -f $tmp; exit $status'";
-const OPENCODE_INSTALL_UNIX: &str =
-    "bash -c 'tmp=$(mktemp) && curl -fsSL https://opencode.ai/install -o $tmp && bash $tmp; status=$?; rm -f $tmp; exit $status'";
-const GROK_INSTALL_UNIX: &str =
-    "bash -c 'tmp=$(mktemp) && curl -fsSL https://x.ai/cli/install.sh -o $tmp && bash $tmp; status=$?; rm -f $tmp; exit $status'";
-
 /// Hermes 官方安装器会自带/选择合适的 Python 运行时。不要再用
 /// `python3 -m pip ... || python -m pip ...`:Hermes PyPI 包要求 Python >=3.11,
 /// 但 macOS 系统 `python3` 常是 3.9,而 pyenv 下 `python` shim 还可能不存在,会把
 /// 真正的 Python 版本问题盖成 "python command exists in these Python versions"。
 const HERMES_INSTALL_UNIX: &str =
-    "bash -c 'tmp=$(mktemp) && curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh -o $tmp && bash $tmp; status=$?; rm -f $tmp; exit $status'";
+    "bash -c 'tmp=$(mktemp) && (curl -fsSL https://ghfast.top/https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh -o $tmp || curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh -o $tmp) && bash $tmp; status=$?; rm -f $tmp; exit $status'";
 const HERMES_UPDATE_UNIX: &str =
-    "hermes update || bash -c 'tmp=$(mktemp) && curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh -o $tmp && bash $tmp; status=$?; rm -f $tmp; exit $status'";
+    "hermes update || bash -c 'tmp=$(mktemp) && (curl -fsSL https://ghfast.top/https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh -o $tmp || curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh -o $tmp) && bash $tmp; status=$?; rm -f $tmp; exit $status'";
 
 #[cfg(target_os = "windows")]
 const HERMES_INSTALL_WINDOWS_SCRIPT: &str =
-    "irm https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.ps1 | iex";
-#[cfg(target_os = "windows")]
-const GROK_INSTALL_WINDOWS_SCRIPT: &str = "irm https://x.ai/cli/install.ps1 | iex";
+    "try { irm https://ghfast.top/https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.ps1 -ErrorAction Stop | iex } catch { irm https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.ps1 | iex }";
 
 #[cfg(target_os = "windows")]
 fn powershell_encoded_command(script: &str) -> String {
@@ -475,14 +759,6 @@ fn hermes_install_windows_command() -> String {
     format!(
         "powershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand {}",
         powershell_encoded_command(HERMES_INSTALL_WINDOWS_SCRIPT)
-    )
-}
-
-#[cfg(target_os = "windows")]
-fn grok_install_windows_command() -> String {
-    format!(
-        "powershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand {}",
-        powershell_encoded_command(GROK_INSTALL_WINDOWS_SCRIPT)
     )
 }
 
@@ -546,20 +822,6 @@ fn tool_action_shell_command_for_shell(
     action: ToolLifecycleAction,
     shell: LifecycleCommandShell,
 ) -> Option<String> {
-    // xAI's primary Windows distribution is the native PowerShell installer.
-    // Keep npm as the network/policy fallback, matching the POSIX installer chain.
-    #[cfg(target_os = "windows")]
-    if tool == "grok"
-        && matches!(action, ToolLifecycleAction::Install)
-        && matches!(shell, LifecycleCommandShell::WindowsBatch)
-    {
-        return Some(chain_update_commands(
-            grok_install_windows_command(),
-            npm_install_command_for(tool)?.to_string(),
-            shell,
-        ));
-    }
-
     if tool == "hermes" {
         return Some(
             match (action, shell) {
@@ -2521,22 +2783,11 @@ fn static_fallback_command(tool: &str) -> String {
 /// - Windows 上 Claude/OpenCode 原生不启用（对应 installer 都是 bash 脚本）；Grok
 ///   使用官方 PowerShell installer，并同样保留 npm fallback。WSL 作为 Linux 环境
 ///   复用这套 POSIX 安装优先级。
-fn installer_with_npm_fallback(installer: &str, tool: &str) -> String {
-    match npm_install_command_for(tool) {
-        Some(npm) => chain_update_commands(
-            installer.to_string(),
-            npm.to_string(),
-            LifecycleCommandShell::Posix,
-        ),
-        None => installer.to_string(),
-    }
-}
-
 fn posix_install_command_for(tool: &str) -> String {
     match tool {
-        "claude" => installer_with_npm_fallback(CLAUDE_INSTALL_UNIX, tool),
-        "grok" => installer_with_npm_fallback(GROK_INSTALL_UNIX, tool),
-        "opencode" => installer_with_npm_fallback(OPENCODE_INSTALL_UNIX, tool),
+        "claude" | "grok" | "opencode" => npm_install_command_for(tool)
+            .map(str::to_string)
+            .unwrap_or_default(),
         "hermes" => HERMES_INSTALL_UNIX.to_string(),
         _ => static_fallback_command_for(tool, ToolLifecycleAction::Install),
     }
@@ -4051,24 +4302,9 @@ mod tests {
         }
 
         #[test]
-        fn grok_windows_install_prefers_powershell_with_npm_fallback() {
+        fn grok_windows_install_uses_china_mirror_npm_path() {
             let install = static_fallback_command_for("grok", ToolLifecycleAction::Install);
-            let native = grok_install_windows_command();
-            assert!(
-                install.starts_with(&native),
-                "native installer first: {install}"
-            );
-            assert!(
-                install.ends_with("|| call npm i -g @xai-official/grok@latest"),
-                "npm fallback should remain available: {install}"
-            );
-            let expected_encoded = powershell_encoded_command(GROK_INSTALL_WINDOWS_SCRIPT);
-            assert_eq!(
-                native
-                    .split_once("-EncodedCommand ")
-                    .map(|(_, encoded)| encoded),
-                Some(expected_encoded.as_str())
-            );
+            assert_eq!(install, "npm i -g @xai-official/grok@latest");
         }
 
         #[test]
@@ -4368,38 +4604,21 @@ mod tests {
         }
 
         #[test]
-        fn wsl_install_uses_posix_install_priority() {
+        fn wsl_install_uses_china_mirror_npm_path() {
             let claude =
                 wsl_tool_action_shell_command("claude", ToolLifecycleAction::Install).unwrap();
-            assert!(
-                claude.starts_with("bash -c 'tmp=$(mktemp) && curl -fsSL https://claude.ai/install.sh ")
-                    && claude.contains(" || npm i -g @anthropic-ai/claude-code@latest"),
-                "WSL claude install should prefer native POSIX installer with npm fallback: {claude}"
-            );
-            assert!(!claude.contains("| bash"));
+            assert_eq!(claude, "npm i -g @anthropic-ai/claude-code@latest");
 
             let opencode =
                 wsl_tool_action_shell_command("opencode", ToolLifecycleAction::Install).unwrap();
-            assert!(
-                opencode.starts_with(
-                    "bash -c 'tmp=$(mktemp) && curl -fsSL https://opencode.ai/install "
-                ) && opencode.contains(" || npm i -g opencode-ai@latest"),
-                "WSL opencode install should prefer native POSIX installer with npm fallback: {opencode}"
-            );
-            assert!(!opencode.contains("| bash"));
+            assert_eq!(opencode, "npm i -g opencode-ai@latest");
 
             let codex =
                 wsl_tool_action_shell_command("codex", ToolLifecycleAction::Install).unwrap();
             assert_eq!(codex, "npm i -g @openai/codex@latest");
 
             let grok = wsl_tool_action_shell_command("grok", ToolLifecycleAction::Install).unwrap();
-            assert!(
-                grok.starts_with(
-                    "bash -c 'tmp=$(mktemp) && curl -fsSL https://x.ai/cli/install.sh "
-                ) && grok.contains(" || npm i -g @xai-official/grok@latest"),
-                "WSL grok install should prefer native POSIX installer with npm fallback: {grok}"
-            );
-            assert!(!grok.contains("| bash"));
+            assert_eq!(grok, "npm i -g @xai-official/grok@latest");
         }
 
         #[test]
@@ -5037,52 +5256,22 @@ mod tests {
         }
     }
 
-    /// install 端的"上游推荐 || npm 兜底"短路链:把工具→官方安装方式这一上游事实
-    /// 固化为回归断言。任何方案改动若打破短路链结构或 URL,都会被这些用例拦下。
+    /// npm 工具统一由生命周期脚本注入 npmmirror registry。这里验证各工具仍使用
+    /// 官方 npm 包名，且不绕回海外安装脚本。
     #[cfg(not(target_os = "windows"))]
     mod install_strategy {
         use super::super::*;
 
         #[test]
-        fn claude_install_prefers_native_with_npm_fallback() {
-            // Anthropic 现在主推 native installer(claude.ai/install.sh),
-            // 网络不通时短路到 npm 仍能装上;两段都得在,顺序也得对。
+        fn claude_install_uses_official_npm_package() {
             let cmd = install_command_for("claude");
-            assert!(
-                cmd.contains("https://claude.ai/install.sh"),
-                "should include official installer URL: {cmd}"
-            );
-            assert!(
-                cmd.contains("@anthropic-ai/claude-code@latest"),
-                "should keep npm package as fallback: {cmd}"
-            );
-            let parts: Vec<&str> = cmd.split("||").collect();
-            assert_eq!(parts.len(), 2, "should be a two-step short-circuit chain");
-            assert!(parts[0].contains("install.sh"), "native first: {cmd}");
-            assert!(
-                !parts[0].contains('|'),
-                "native installer should avoid pipe: {cmd}"
-            );
-            assert!(parts[1].contains("npm i -g"), "npm second: {cmd}");
+            assert_eq!(cmd, "npm i -g @anthropic-ai/claude-code@latest");
         }
 
         #[test]
-        fn opencode_install_prefers_native_with_npm_fallback() {
-            // SST 自家 install.sh 与 claude 同形态:bash 脚本、网络下载、装到 ~/.opencode/bin。
+        fn opencode_install_uses_official_npm_package() {
             let cmd = install_command_for("opencode");
-            assert!(
-                cmd.contains("https://opencode.ai/install"),
-                "should include official installer URL: {cmd}"
-            );
-            assert!(
-                cmd.contains("opencode-ai@latest"),
-                "should keep npm package as fallback: {cmd}"
-            );
-            assert!(cmd.contains("||"), "should chain fallback: {cmd}");
-            assert!(
-                !cmd.split("||").next().unwrap_or_default().contains('|'),
-                "native installer should avoid pipe: {cmd}"
-            );
+            assert_eq!(cmd, "npm i -g opencode-ai@latest");
         }
 
         #[test]
@@ -5103,24 +5292,9 @@ mod tests {
         }
 
         #[test]
-        fn grok_install_prefers_native_with_npm_fallback() {
+        fn grok_install_uses_official_npm_package() {
             let cmd = install_command_for("grok");
-            assert!(
-                cmd.contains("https://x.ai/cli/install.sh"),
-                "should include official installer URL: {cmd}"
-            );
-            assert!(
-                cmd.contains("@xai-official/grok@latest"),
-                "should keep npm package as fallback: {cmd}"
-            );
-            let parts: Vec<&str> = cmd.split("||").collect();
-            assert_eq!(parts.len(), 2, "should be a two-step short-circuit chain");
-            assert!(parts[0].contains("install.sh"), "native first: {cmd}");
-            assert!(
-                !parts[0].contains('|'),
-                "native installer should avoid pipe: {cmd}"
-            );
-            assert!(parts[1].contains("npm i -g"), "npm second: {cmd}");
+            assert_eq!(cmd, "npm i -g @xai-official/grok@latest");
         }
 
         #[test]

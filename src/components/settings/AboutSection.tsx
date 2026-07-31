@@ -59,6 +59,12 @@ interface ToolVersion {
   wsl_distro: string | null;
 }
 
+interface RuntimeDependency {
+  name: string;
+  version: string | null;
+  installed: boolean;
+}
+
 const TOOL_NAMES = [
   "claude",
   "codex",
@@ -237,6 +243,11 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
     null,
   );
   const [showInstallCommands, setShowInstallCommands] = useState(false);
+  const [runtimeDependencies, setRuntimeDependencies] = useState<
+    RuntimeDependency[]
+  >([]);
+  const [isLoadingDependencies, setIsLoadingDependencies] = useState(true);
+  const [isInstallingEnvironment, setIsInstallingEnvironment] = useState(false);
 
   const { hasUpdate, updateInfo, checkUpdate, resetDismiss, isChecking } =
     useUpdate();
@@ -280,6 +291,30 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
       }),
     [toolVersionByName],
   );
+
+  const missingToolNames = useMemo(
+    () =>
+      TOOL_NAMES.filter((toolName) => {
+        const tool = toolVersionByName.get(toolName);
+        return tool && !tool.version && !tool.installed_but_broken;
+      }),
+    [toolVersionByName],
+  );
+
+  const hasMissingDependencies = runtimeDependencies.some(
+    (dependency) => !dependency.installed,
+  );
+
+  const loadRuntimeDependencies = useCallback(async () => {
+    setIsLoadingDependencies(true);
+    try {
+      setRuntimeDependencies(await settingsApi.getRuntimeDependencies());
+    } catch (error) {
+      console.error("[AboutSection] Failed to load runtime dependencies", error);
+    } finally {
+      setIsLoadingDependencies(false);
+    }
+  }, []);
 
   const refreshToolVersions = useCallback(
     async (
@@ -415,6 +450,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
 
     void loadAppVersion();
     void loadAllToolVersions();
+    void loadRuntimeDependencies();
     return () => {
       active = false;
     };
@@ -663,6 +699,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
       if (isBatch) {
         setBatchAction(null);
       }
+      void loadRuntimeDependencies();
 
       const actionLabel =
         action === "install"
@@ -733,6 +770,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
       toolVersionByName,
       refreshToolVersions,
       diagnoseToolSilently,
+      loadRuntimeDependencies,
     ],
   );
 
@@ -801,6 +839,28 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
 
   const handleCancelUpgrade = useCallback(() => setPendingUpgrade(null), []);
 
+  const handleInstallMissing = useCallback(async () => {
+    setIsInstallingEnvironment(true);
+    try {
+      const dependencies = await settingsApi.installRuntimeDependencies();
+      setRuntimeDependencies(dependencies);
+      if (missingToolNames.length > 0) {
+        await executeRun(missingToolNames, "install");
+      } else {
+        toast.success(t("settings.environmentReady"), { closeButton: true });
+      }
+    } catch (error) {
+      console.error("[AboutSection] Failed to install missing environment", error);
+      toast.error(t("settings.environmentInstallFailed"), {
+        description: extractErrorMessage(error),
+        closeButton: true,
+      });
+    } finally {
+      setIsInstallingEnvironment(false);
+      await loadRuntimeDependencies();
+    }
+  }, [executeRun, loadRuntimeDependencies, missingToolNames, t]);
+
   const displayVersion = version ?? t("common.unknown");
 
   // 任一安装/升级进行中（批量或单工具）即视为忙碌：用于禁用所有操作按钮，
@@ -809,6 +869,7 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
   // 还没置位,如果不算进 busy 会留出 1-3 秒的并发触发窗口。
   const isAnyBusy =
     Boolean(batchAction) ||
+    isInstallingEnvironment ||
     Object.keys(toolActions).length > 0 ||
     preflightTools.size > 0;
 
@@ -953,8 +1014,35 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
 
       <div className="space-y-3">
         <div className="flex flex-col gap-2 px-1 sm:flex-row sm:items-center sm:justify-between">
-          <h3 className="text-sm font-medium">{t("settings.localEnvCheck")}</h3>
+          <div>
+            <h3 className="text-sm font-medium">{t("settings.localEnvCheck")}</h3>
+            <p className="mt-0.5 text-xs text-muted-foreground">
+              {t("settings.chinaMirrorInstallHint")}
+            </p>
+          </div>
           <div className="flex flex-wrap items-center gap-2">
+            <Button
+              size="sm"
+              className="h-7 gap-1.5 text-xs"
+              onClick={() => void handleInstallMissing()}
+              disabled={
+                isLoadingTools ||
+                isLoadingDependencies ||
+                isAnyBusy ||
+                (!hasMissingDependencies && missingToolNames.length === 0)
+              }
+            >
+              {isInstallingEnvironment ? (
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              ) : (
+                <Download className="h-3.5 w-3.5" />
+              )}
+              {t("settings.installMissingAll", {
+                count:
+                  missingToolNames.length +
+                  runtimeDependencies.filter((item) => !item.installed).length,
+              })}
+            </Button>
             <Button
               size="sm"
               variant="outline"
@@ -1003,6 +1091,35 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
               })}
             </Button>
           </div>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 px-1">
+          <span className="text-xs text-muted-foreground">
+            {t("settings.requiredEnvironment")}
+          </span>
+          {isLoadingDependencies ? (
+            <Loader2 className="h-3.5 w-3.5 animate-spin text-muted-foreground" />
+          ) : (
+            runtimeDependencies.map((dependency) => (
+              <Badge
+                key={dependency.name}
+                variant="outline"
+                className={
+                  dependency.installed
+                    ? "gap-1 border-green-500/20 bg-green-500/10 text-green-700 dark:text-green-400"
+                    : "gap-1 border-yellow-500/20 bg-yellow-500/10 text-yellow-700 dark:text-yellow-400"
+                }
+              >
+                {dependency.installed ? (
+                  <CheckCircle2 className="h-3 w-3" />
+                ) : (
+                  <AlertCircle className="h-3 w-3" />
+                )}
+                {dependency.name}
+                {dependency.version ? ` ${dependency.version}` : ""}
+              </Badge>
+            ))
+          )}
         </div>
 
         <div className="grid gap-3 px-1 sm:grid-cols-2 xl:grid-cols-3">
