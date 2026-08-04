@@ -7,22 +7,62 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Existing tag to build and publish, for example v3.19.1'
-        required: true
+        description: 'Optional existing tag to build and publish; leave blank to publish v<package.json version> from the default branch'
+        required: false
         type: string
-
-env:
-  RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
 
 permissions:
   contents: write
 
 concurrency:
-  group: release-${{ inputs.tag || github.ref_name }}
+  group: release-${{ github.event.inputs.tag || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
+  resolve-tag:
+    name: Resolve release tag
+    runs-on: ubuntu-22.04
+    outputs:
+      tag: ${{ steps.resolve.outputs.tag }}
+      commitish: ${{ steps.resolve.outputs.commitish }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+
+      - name: Resolve tag and commit
+        id: resolve
+        shell: bash
+        env:
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+        run: |
+          set -euo pipefail
+          if [ -n "$INPUT_TAG" ]; then
+            TAG="$INPUT_TAG"
+          elif [ "$GITHUB_REF_TYPE" = "tag" ]; then
+            TAG="$GITHUB_REF_NAME"
+          else
+            VERSION="$(node -p "require('./package.json').version")"
+            TAG="v${VERSION}"
+          fi
+          if [ -z "$TAG" ]; then
+            echo "::error::Could not resolve the release tag." >&2
+            exit 1
+          fi
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "commitish=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "Resolved release tag: ${TAG}"
+
   release:
+    needs: resolve-tag
+    env:
+      RELEASE_TAG: ${{ needs.resolve-tag.outputs.tag }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -40,7 +80,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
         with:
-          ref: ${{ inputs.tag || github.ref }}
+          ref: ${{ github.event.inputs.tag || github.ref }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -632,7 +672,9 @@ jobs:
   publish-release:
     name: Publish GitHub Release
     runs-on: ubuntu-22.04
-    needs: release
+    needs: [resolve-tag, release]
+    env:
+      RELEASE_TAG: ${{ needs.resolve-tag.outputs.tag }}
     permissions:
       contents: write
     steps:
@@ -650,13 +692,16 @@ jobs:
           ls -la release-assets
 
       - name: Upload Release Assets
+        id: upload
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: ${{ env.RELEASE_TAG }}
-          name: CC Switch ${{ env.RELEASE_TAG }}
+          tag_name: ${{ needs.resolve-tag.outputs.tag }}
+          target_commitish: ${{ needs.resolve-tag.outputs.commitish }}
+          name: CC Switch ${{ needs.resolve-tag.outputs.tag }}
           prerelease: false
+          make_latest: true
           body: |
-            ## CC Switch ${{ env.RELEASE_TAG }}
+            ## CC Switch ${{ needs.resolve-tag.outputs.tag }}
 
             🌐 **Only Official Website / 唯一官方网站 / 唯一の公式サイト**: [ccswitch.io](https://ccswitch.io)
 
@@ -664,24 +709,46 @@ jobs:
 
             ### 下载
 
-            - **macOS**: `CC-Switch-${{ env.RELEASE_TAG }}-macOS.dmg`（推荐）或 `CC-Switch-${{ env.RELEASE_TAG }}-macOS.zip`（解压即用）
-            - **Windows (x86_64)**: `CC-Switch-${{ env.RELEASE_TAG }}-Windows.msi`（安装版）或 `CC-Switch-${{ env.RELEASE_TAG }}-Windows-Portable.zip`（绿色版）
-            - **Windows (ARM64)**: `CC-Switch-${{ env.RELEASE_TAG }}-Windows-arm64.msi`（安装版）或 `CC-Switch-${{ env.RELEASE_TAG }}-Windows-arm64-Portable.zip`（绿色版）
-            - **Linux (x86_64)**: `CC-Switch-${{ env.RELEASE_TAG }}-Linux-x86_64.AppImage` / `.deb` / `.rpm`
-            - **Linux (ARM64)**: `CC-Switch-${{ env.RELEASE_TAG }}-Linux-arm64.AppImage` / `.deb` / `.rpm`
+            - **macOS**: `CC-Switch-${{ needs.resolve-tag.outputs.tag }}-macOS.dmg`（推荐）或 `CC-Switch-${{ needs.resolve-tag.outputs.tag }}-macOS.zip`（解压即用）
+            - **Windows (x86_64)**: `CC-Switch-${{ needs.resolve-tag.outputs.tag }}-Windows.msi`（安装版）或 `CC-Switch-${{ needs.resolve-tag.outputs.tag }}-Windows-Portable.zip`（绿色版）
+            - **Windows (ARM64)**: `CC-Switch-${{ needs.resolve-tag.outputs.tag }}-Windows-arm64.msi`（安装版）或 `CC-Switch-${{ needs.resolve-tag.outputs.tag }}-Windows-arm64-Portable.zip`（绿色版）
+            - **Linux (x86_64)**: `CC-Switch-${{ needs.resolve-tag.outputs.tag }}-Linux-x86_64.AppImage` / `.deb` / `.rpm`
+            - **Linux (ARM64)**: `CC-Switch-${{ needs.resolve-tag.outputs.tag }}-Linux-arm64.AppImage` / `.deb` / `.rpm`
 
             > `.tar.gz` 为 Tauri updater 自动更新专用，无需手动下载。
 
             ---
             Code signing and notarization are included when the corresponding GitHub Secrets are configured.
           files: release-assets/*
+          fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify Release Assets
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ needs.resolve-tag.outputs.tag }}
+          RELEASE_URL: ${{ steps.upload.outputs.url }}
+          ASSETS_JSON: ${{ steps.upload.outputs.assets }}
+        run: |
+          set -euo pipefail
+          if [ -z "$RELEASE_URL" ]; then
+            echo "::error::The release was not created or updated." >&2
+            exit 1
+          fi
+          count=$(printf '%s' "$ASSETS_JSON" | jq 'length')
+          if [ "$count" -eq 0 ]; then
+            echo "::error::No release assets were uploaded for ${RELEASE_TAG}." >&2
+            exit 1
+          fi
+          echo "Release ${RELEASE_TAG} is published with ${count} asset(s)."
 
   assemble-latest-json:
     name: Assemble latest.json
     runs-on: ubuntu-22.04
-    needs: publish-release
+    needs: [resolve-tag, publish-release]
+    env:
+      RELEASE_TAG: ${{ needs.resolve-tag.outputs.tag }}
     permissions:
       contents: write
     steps:

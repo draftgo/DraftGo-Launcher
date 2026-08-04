@@ -11,8 +11,16 @@ git push origin v3.19.1
 ```
 
 GitHub Actions 会为 Windows、Linux 和 macOS 编译安装包，随后自动创建正式
-GitHub Release 并上传构建产物。也可以在 Actions 页面手动运行 `Release`，输入
-一个已经存在的 tag。
+GitHub Release 并上传构建产物。
+
+也可以在 Actions 页面手动运行 `Release`：
+
+- 留空 `tag`：按当前默认分支的 `package.json` 版本自动发布 `v<版本号>`，
+  不需要预先创建或推送 tag。
+- 填写 `tag`：构建并发布该已存在的 tag（例如 `v3.19.1`）。
+
+发布步骤会校验 Release 和已上传的安装包；如果没有任何产物被上传，工作流会
+以失败结束，而不是显示成功但不产生下载内容。
 
 ## 签名
 
