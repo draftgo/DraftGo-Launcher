@@ -19,7 +19,8 @@ pub const DRAFTGO_LAUNCHER_CODEX_MODEL_PROVIDER_ID: &str = "custom";
 /// marker: unlike a generic localhost `base_url`, it can be detected and
 /// cleaned up without mistaking a user's own local provider for takeover.
 pub const DRAFTGO_LAUNCHER_CODEX_OFFICIAL_PROXY_PROVIDER_ID: &str = "draftgo-launcher-official";
-pub const DRAFTGO_LAUNCHER_CODEX_MODEL_CATALOG_FILENAME: &str = "draftgo-launcher-model-catalog.json";
+pub const DRAFTGO_LAUNCHER_CODEX_MODEL_CATALOG_FILENAME: &str =
+    "draftgo-launcher-model-catalog.json";
 const CODEX_PROXY_AUTH_PLACEHOLDER: &str = "PROXY_MANAGED";
 
 #[cfg(target_os = "windows")]
@@ -1248,7 +1249,8 @@ fn set_codex_model_catalog_json_field(
 
     match catalog_path {
         Some(_) => {
-            doc["model_catalog_json"] = toml_edit::value(DRAFTGO_LAUNCHER_CODEX_MODEL_CATALOG_FILENAME);
+            doc["model_catalog_json"] =
+                toml_edit::value(DRAFTGO_LAUNCHER_CODEX_MODEL_CATALOG_FILENAME);
         }
         None => {
             let should_remove = doc
@@ -1362,7 +1364,8 @@ pub fn prepare_codex_config_text_with_model_catalog(
 pub fn read_codex_model_catalog_simplified_from_live() -> Result<Option<Value>, AppError> {
     let config_text = read_codex_config_text()?;
     let generated_path = get_codex_model_catalog_path();
-    let Some(catalog_path) = resolve_draftgo_launcher_catalog_path(&config_text, &generated_path) else {
+    let Some(catalog_path) = resolve_draftgo_launcher_catalog_path(&config_text, &generated_path)
+    else {
         return Ok(None);
     };
     if !catalog_path.exists() {
@@ -3864,7 +3867,8 @@ web_search = "disabled"
         let generated = PathBuf::from("/tmp/.codex/draftgo-launcher-model-catalog.json");
         let config = r#"model_catalog_json = "/tmp/.codex/draftgo-launcher-model-catalog.json"
 "#;
-        let resolved = resolve_draftgo_launcher_catalog_path(config, &generated).expect("path resolves");
+        let resolved =
+            resolve_draftgo_launcher_catalog_path(config, &generated).expect("path resolves");
         assert_eq!(resolved, generated);
     }
 
@@ -4158,8 +4162,9 @@ model = "glm-5"
 "#;
         // Simulate a WSL UNC path as draftgo-launcher would see it on Windows;
         // the function now writes just the relative filename.
-        let unc_path =
-            Path::new(r"\\wsl.localhost\Ubuntu\home\user\.codex\draftgo-launcher-model-catalog.json");
+        let unc_path = Path::new(
+            r"\\wsl.localhost\Ubuntu\home\user\.codex\draftgo-launcher-model-catalog.json",
+        );
 
         let result = set_codex_model_catalog_json_field(input, Some(unc_path)).unwrap();
         let parsed: toml::Value = toml::from_str(&result).unwrap();

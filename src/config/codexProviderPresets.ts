@@ -130,7 +130,8 @@ export const codexProviderPresets: CodexProviderPreset[] = [
     name: "Kimi",
     primePartner: true,
     websiteUrl: "https://platform.kimi.com?aff=draftgo-launcher",
-    apiKeyUrl: "https://platform.kimi.com/console/api-keys?aff=draftgo-launcher",
+    apiKeyUrl:
+      "https://platform.kimi.com/console/api-keys?aff=draftgo-launcher",
     auth: generateThirdPartyAuth(""),
     config: generateThirdPartyConfig(
       "kimi",
@@ -811,7 +812,8 @@ requires_openai_auth = true`,
   {
     name: "CrazyRouter",
     websiteUrl: "https://www.crazyrouter.com",
-    apiKeyUrl: "https://www.crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher",
+    apiKeyUrl:
+      "https://www.crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher",
     auth: generateThirdPartyAuth(""),
     config: generateThirdPartyConfig(
       "crazyrouter",

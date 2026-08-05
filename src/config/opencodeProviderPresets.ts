@@ -291,7 +291,8 @@ export const opencodeProviderPresets: OpenCodeProviderPreset[] = [
     name: "Kimi",
     primePartner: true,
     websiteUrl: "https://platform.kimi.com?aff=draftgo-launcher",
-    apiKeyUrl: "https://platform.kimi.com/console/api-keys?aff=draftgo-launcher",
+    apiKeyUrl:
+      "https://platform.kimi.com/console/api-keys?aff=draftgo-launcher",
     settingsConfig: {
       npm: "@ai-sdk/openai-compatible",
       name: "Kimi",
@@ -326,7 +327,8 @@ export const opencodeProviderPresets: OpenCodeProviderPreset[] = [
     name: "Kimi For Coding",
     primePartner: true,
     websiteUrl: "https://www.kimi.com/code/?aff=draftgo-launcher",
-    apiKeyUrl: "https://platform.kimi.com/console/api-keys?aff=draftgo-launcher",
+    apiKeyUrl:
+      "https://platform.kimi.com/console/api-keys?aff=draftgo-launcher",
     settingsConfig: {
       npm: "@ai-sdk/anthropic",
       name: "Kimi For Coding",
@@ -1129,7 +1131,8 @@ export const opencodeProviderPresets: OpenCodeProviderPreset[] = [
   {
     name: "CrazyRouter",
     websiteUrl: "https://www.crazyrouter.com",
-    apiKeyUrl: "https://www.crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher",
+    apiKeyUrl:
+      "https://www.crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher",
     settingsConfig: {
       npm: "@ai-sdk/anthropic",
       name: "CrazyRouter",

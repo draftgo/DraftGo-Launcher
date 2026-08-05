@@ -4,13 +4,7 @@ import { FormLabel } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ClaudeIcon, CodexIcon, GeminiIcon } from "@/components/BrandIcons";
-import {
-  ArrowUpAZ,
-  Search,
-  Zap,
-  Layers,
-  Settings2,
-} from "lucide-react";
+import { ArrowUpAZ, Search, Zap, Layers, Settings2 } from "lucide-react";
 import type { ProviderPreset } from "@/config/claudeProviderPresets";
 import type { CodexProviderPreset } from "@/config/codexProviderPresets";
 import type { GeminiProviderPreset } from "@/config/geminiProviderPresets";

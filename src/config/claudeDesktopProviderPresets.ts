@@ -12,10 +12,7 @@ import { ProviderCategory } from "../types";
 import type { PresetTheme } from "./claudeProviderPresets";
 
 export type ClaudeDesktopApiFormat =
-  | "anthropic"
-  | "openai_chat"
-  | "openai_responses"
-  | "gemini_native";
+  "anthropic" | "openai_chat" | "openai_responses" | "gemini_native";
 
 export interface ClaudeDesktopRoutePreset {
   routeId: string;
@@ -679,7 +676,8 @@ export const claudeDesktopProviderPresets: ClaudeDesktopProviderPreset[] = [
   {
     name: "CrazyRouter",
     websiteUrl: "https://www.crazyrouter.com",
-    apiKeyUrl: "https://www.crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher",
+    apiKeyUrl:
+      "https://www.crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher",
     category: "third_party",
     baseUrl: "https://cn.crazyrouter.com",
     mode: "direct",

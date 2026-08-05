@@ -83,9 +83,10 @@ pub async fn get_status(State(state): State<ProxyState>) -> Result<Json<ProxySta
 pub async fn handle_models() -> Result<Json<Value>, ProxyError> {
     let generated_path = crate::codex_config::get_codex_model_catalog_path();
     let active_catalog_path = match crate::codex_config::read_codex_config_text() {
-        Ok(config_text) => {
-            crate::codex_config::resolve_draftgo_launcher_catalog_path(&config_text, &generated_path)
-        }
+        Ok(config_text) => crate::codex_config::resolve_draftgo_launcher_catalog_path(
+            &config_text,
+            &generated_path,
+        ),
         Err(_) => None,
     };
 

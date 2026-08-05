@@ -977,7 +977,10 @@ mod tests {
     #[serial_test::serial]
     fn grokbuild_deeplink_never_carries_env_key_or_resolved_secret() {
         let original = std::env::var_os("DRAFTGO_LAUNCHER_DEEPLINK_ENV_PROBE");
-        std::env::set_var("DRAFTGO_LAUNCHER_DEEPLINK_ENV_PROBE", "secret-must-not-leak");
+        std::env::set_var(
+            "DRAFTGO_LAUNCHER_DEEPLINK_ENV_PROBE",
+            "secret-must-not-leak",
+        );
 
         let mut request = DeepLinkImportRequest {
             resource: "provider".to_string(),
@@ -1036,7 +1039,10 @@ mod tests {
         // 真正的安全属性零覆盖。设上之后，一旦有人恢复回退解析，api_key 会变成
         // 非空、拒绝不再触发，这条断言立刻变红。
         let original = std::env::var_os("DRAFTGO_LAUNCHER_DEEPLINK_ENV_PROBE");
-        std::env::set_var("DRAFTGO_LAUNCHER_DEEPLINK_ENV_PROBE", "secret-must-not-leak");
+        std::env::set_var(
+            "DRAFTGO_LAUNCHER_DEEPLINK_ENV_PROBE",
+            "secret-must-not-leak",
+        );
 
         let config_toml = concat!(
             "[models]\ndefault = \"grok-env\"\n\n",

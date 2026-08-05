@@ -901,7 +901,8 @@ export const hermesProviderPresets: HermesProviderPreset[] = [
   {
     name: "CrazyRouter",
     websiteUrl: "https://www.crazyrouter.com",
-    apiKeyUrl: "https://www.crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher",
+    apiKeyUrl:
+      "https://www.crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher",
     settingsConfig: {
       name: "crazyrouter",
       base_url: "https://cn.crazyrouter.com",

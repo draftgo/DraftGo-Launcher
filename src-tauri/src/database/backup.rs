@@ -760,7 +760,8 @@ mod tests {
         ];
 
         for (label, template) in cases {
-            let target = std::env::temp_dir().join(format!("draftgo-launcher-authorizer-{label}.sqlite"));
+            let target =
+                std::env::temp_dir().join(format!("draftgo-launcher-authorizer-{label}.sqlite"));
             let _ = std::fs::remove_file(&target);
 
             // 合法的导出头 + 越界语句。头部校验只比前缀，这份输入过得了它，

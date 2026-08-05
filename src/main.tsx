@@ -95,7 +95,10 @@ async function bootstrap() {
       ReactDOM.createRoot(document.getElementById("root")!).render(
         <React.StrictMode>
           <FrontendErrorBoundary>
-            <ThemeProvider defaultTheme="system" storageKey="draftgo-launcher-theme">
+            <ThemeProvider
+              defaultTheme="system"
+              storageKey="draftgo-launcher-theme"
+            >
               <DatabaseUpgrade payload={initError} />
               <Toaster />
             </ThemeProvider>
@@ -118,7 +121,10 @@ async function bootstrap() {
     <React.StrictMode>
       <FrontendErrorBoundary>
         <QueryClientProvider client={queryClient}>
-          <ThemeProvider defaultTheme="system" storageKey="draftgo-launcher-theme">
+          <ThemeProvider
+            defaultTheme="system"
+            storageKey="draftgo-launcher-theme"
+          >
             <UpdateProvider>
               <App />
               <Toaster />

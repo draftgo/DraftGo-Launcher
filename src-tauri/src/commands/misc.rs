@@ -525,8 +525,11 @@ fn run_tool_lifecycle_silently(command_line: &str, label: &str) -> Result<(), St
     use std::os::windows::process::CommandExt;
     use std::process::Command;
 
-    let bat_file =
-        std::env::temp_dir().join(format!("draftgo_launcher_{}_{}.bat", label, std::process::id()));
+    let bat_file = std::env::temp_dir().join(format!(
+        "draftgo_launcher_{}_{}.bat",
+        label,
+        std::process::id()
+    ));
     std::fs::write(&bat_file, command_line).map_err(|e| format!("写入批处理文件失败: {e}"))?;
 
     let output = Command::new("cmd")
@@ -3280,7 +3283,10 @@ fn launch_macos_terminal(config_file: &std::path::Path, cwd: Option<&Path>) -> R
     let final_cd_command = build_final_shell_cd_command(&shell, cwd);
 
     let temp_dir = std::env::temp_dir();
-    let script_file = temp_dir.join(format!("draftgo_launcher_launcher_{}.sh", std::process::id()));
+    let script_file = temp_dir.join(format!(
+        "draftgo_launcher_launcher_{}.sh",
+        std::process::id()
+    ));
     let config_path = config_file.to_string_lossy();
     let provider_command = build_provider_command_line(&shell, &config_path, cwd);
 
@@ -3613,7 +3619,10 @@ fn launch_linux_terminal(config_file: &std::path::Path, cwd: Option<&Path>) -> R
 
     // Create temp script file
     let temp_dir = std::env::temp_dir();
-    let script_file = temp_dir.join(format!("draftgo_launcher_launcher_{}.sh", std::process::id()));
+    let script_file = temp_dir.join(format!(
+        "draftgo_launcher_launcher_{}.sh",
+        std::process::id()
+    ));
     let config_path = config_file.to_string_lossy();
     let provider_command = build_provider_command_line(&shell, &config_path, cwd);
 
@@ -3714,7 +3723,10 @@ fn launch_windows_terminal(
     let preferred = crate::settings::get_preferred_terminal();
     let terminal = preferred.as_deref().unwrap_or("cmd");
 
-    let bat_file = temp_dir.join(format!("draftgo_launcher_claude_{}.bat", std::process::id()));
+    let bat_file = temp_dir.join(format!(
+        "draftgo_launcher_claude_{}.bat",
+        std::process::id()
+    ));
     let config_path_for_batch = escape_windows_batch_value(&config_file.to_string_lossy());
     let cwd_command = build_windows_cwd_command(cwd);
 
@@ -5893,7 +5905,8 @@ mod tests {
     #[cfg(target_os = "macos")]
     #[test]
     fn terminal_applescript_cold_start_uses_launch_before_do_script() {
-        let script = build_macos_terminal_applescript(Path::new("/tmp/draftgo_launcher_launcher.sh"));
+        let script =
+            build_macos_terminal_applescript(Path::new("/tmp/draftgo_launcher_launcher.sh"));
 
         assert!(
             script.contains(r#"set was_running to application "Terminal" is running"#),
@@ -5914,7 +5927,9 @@ mod tests {
             "already-running branch should use bare do script:\n{script}"
         );
         assert!(
-            script.contains(r#"set launcher_script to "exec sh '/tmp/draftgo_launcher_launcher.sh'""#),
+            script.contains(
+                r#"set launcher_script to "exec sh '/tmp/draftgo_launcher_launcher.sh'""#
+            ),
             "Terminal should replace the auto-created shell:\n{script}"
         );
     }
@@ -5923,7 +5938,8 @@ mod tests {
     #[cfg(target_os = "macos")]
     #[test]
     fn terminal_applescript_does_not_hijack_restored_windows() {
-        let script = build_macos_terminal_applescript(Path::new("/tmp/draftgo_launcher_launcher.sh"));
+        let script =
+            build_macos_terminal_applescript(Path::new("/tmp/draftgo_launcher_launcher.sh"));
         assert!(
             !script.contains(" in window 1"),
             "should not inject into an existing/restored Terminal window:\n{script}"
@@ -5938,7 +5954,8 @@ mod tests {
     #[cfg(target_os = "macos")]
     #[test]
     fn ghostty_applescript_cold_start_uses_initial_command() {
-        let script = build_macos_ghostty_applescript(Path::new("/tmp/draftgo_launcher_launcher.sh"));
+        let script =
+            build_macos_ghostty_applescript(Path::new("/tmp/draftgo_launcher_launcher.sh"));
 
         // Warm launches execute through the AppleScript command property, not `open -na ... -e`.
         assert!(

@@ -470,7 +470,8 @@ requires_openai_auth = true`;
                   value={websiteUrl}
                   onChange={(e) => setWebsiteUrl(e.target.value)}
                   placeholder={t("universalProvider.websiteUrlPlaceholder", {
-                    defaultValue: "https://example.com（可选，用于在列表中显示）",
+                    defaultValue:
+                      "https://example.com（可选，用于在列表中显示）",
                   })}
                 />
               </div>

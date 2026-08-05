@@ -414,7 +414,8 @@ export const grokBuildProviderPresets: GrokBuildProviderPreset[] = [
   {
     name: "CrazyRouter",
     websiteUrl: "https://www.crazyrouter.com",
-    apiKeyUrl: "https://www.crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher",
+    apiKeyUrl:
+      "https://www.crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher",
     auth: grokAuth(),
     config: grokPresetConfig("CrazyRouter", "https://cn.crazyrouter.com/v1"),
     endpointCandidates: ["https://cn.crazyrouter.com/v1"],

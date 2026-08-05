@@ -322,7 +322,8 @@ export const geminiProviderPresets: GeminiProviderPreset[] = [
   {
     name: "CrazyRouter",
     websiteUrl: "https://www.crazyrouter.com",
-    apiKeyUrl: "https://www.crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher",
+    apiKeyUrl:
+      "https://www.crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher",
     settingsConfig: {
       env: {
         GOOGLE_GEMINI_BASE_URL: "https://cn.crazyrouter.com",

@@ -104,7 +104,8 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
     name: "Kimi",
     primePartner: true,
     websiteUrl: "https://platform.kimi.com?aff=draftgo-launcher",
-    apiKeyUrl: "https://platform.kimi.com/console/api-keys?aff=draftgo-launcher",
+    apiKeyUrl:
+      "https://platform.kimi.com/console/api-keys?aff=draftgo-launcher",
     settingsConfig: {
       baseUrl: "https://api.moonshot.cn/v1",
       apiKey: "",
@@ -149,7 +150,8 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
     name: "Kimi For Coding",
     primePartner: true,
     websiteUrl: "https://www.kimi.com/code/?aff=draftgo-launcher",
-    apiKeyUrl: "https://platform.kimi.com/console/api-keys?aff=draftgo-launcher",
+    apiKeyUrl:
+      "https://platform.kimi.com/console/api-keys?aff=draftgo-launcher",
     settingsConfig: {
       baseUrl: "https://api.kimi.com/coding/v1",
       apiKey: "",
@@ -1395,7 +1397,8 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
   {
     name: "CrazyRouter",
     websiteUrl: "https://www.crazyrouter.com",
-    apiKeyUrl: "https://www.crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher",
+    apiKeyUrl:
+      "https://www.crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher",
     settingsConfig: {
       baseUrl: "https://cn.crazyrouter.com/v1",
       apiKey: "",

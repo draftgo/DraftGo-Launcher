@@ -310,7 +310,10 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
     try {
       setRuntimeDependencies(await settingsApi.getRuntimeDependencies());
     } catch (error) {
-      console.error("[AboutSection] Failed to load runtime dependencies", error);
+      console.error(
+        "[AboutSection] Failed to load runtime dependencies",
+        error,
+      );
     } finally {
       setIsLoadingDependencies(false);
     }
@@ -850,7 +853,10 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
         toast.success(t("settings.environmentReady"), { closeButton: true });
       }
     } catch (error) {
-      console.error("[AboutSection] Failed to install missing environment", error);
+      console.error(
+        "[AboutSection] Failed to install missing environment",
+        error,
+      );
       toast.error(t("settings.environmentInstallFailed"), {
         description: extractErrorMessage(error),
         closeButton: true,
@@ -928,7 +934,11 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
               type="button"
               variant="outline"
               size="sm"
-              onClick={() => settingsApi.openExternal("https://github.com/draftgo/DraftGo-Launcher")}
+              onClick={() =>
+                settingsApi.openExternal(
+                  "https://github.com/draftgo/DraftGo-Launcher",
+                )
+              }
               className="h-8 gap-1.5 text-xs"
             >
               <Globe className="h-3.5 w-3.5" />
@@ -1015,7 +1025,9 @@ export function AboutSection({ isPortable }: AboutSectionProps) {
       <div className="space-y-3">
         <div className="flex flex-col gap-2 px-1 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h3 className="text-sm font-medium">{t("settings.localEnvCheck")}</h3>
+            <h3 className="text-sm font-medium">
+              {t("settings.localEnvCheck")}
+            </h3>
             <p className="mt-0.5 text-xs text-muted-foreground">
               {t("settings.chinaMirrorInstallHint")}
             </p>

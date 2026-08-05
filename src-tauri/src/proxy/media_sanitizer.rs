@@ -1150,7 +1150,8 @@ mod tests {
             .unwrap()
             .is_empty());
         assert_eq!(
-            body["contents"][0]["parts"][0]["functionResponse"]["response"]["draftgo_launcher_media"],
+            body["contents"][0]["parts"][0]["functionResponse"]["response"]
+                ["draftgo_launcher_media"],
             UNSUPPORTED_IMAGE_MARKER
         );
         assert!(!body.to_string().contains("GEMINI_FUNCTION_SENTINEL"));
