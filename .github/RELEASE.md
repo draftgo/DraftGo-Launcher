@@ -6,8 +6,8 @@
 `src-tauri/tauri.conf.json` 后创建并推送 `v` 开头的 tag：
 
 ```powershell
-git tag v3.19.1
-git push origin v3.19.1
+git tag v1.0.0
+git push origin v1.0.0
 ```
 
 GitHub Actions 会为 Windows、Linux 和 macOS 编译安装包，随后自动创建正式
@@ -17,7 +17,7 @@ GitHub Release 并上传构建产物。
 
 - 留空 `tag`：按当前默认分支的 `package.json` 版本自动发布 `v<版本号>`，
   不需要预先创建或推送 tag。
-- 填写 `tag`：构建并发布该已存在的 tag（例如 `v3.19.1`）。
+- 填写 `tag`：构建并发布该已存在的 tag（例如 `v1.0.0`）。
 
 发布步骤会校验 Release 和已上传的安装包；如果没有任何产物被上传，工作流会
 以失败结束，而不是显示成功但不产生下载内容。

@@ -103,8 +103,8 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
   {
     name: "Kimi",
     primePartner: true,
-    websiteUrl: "https://platform.kimi.com?aff=cc-switch",
-    apiKeyUrl: "https://platform.kimi.com/console/api-keys?aff=cc-switch",
+    websiteUrl: "https://platform.kimi.com?aff=draftgo-launcher",
+    apiKeyUrl: "https://platform.kimi.com/console/api-keys?aff=draftgo-launcher",
     settingsConfig: {
       baseUrl: "https://api.moonshot.cn/v1",
       apiKey: "",
@@ -148,8 +148,8 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
   {
     name: "Kimi For Coding",
     primePartner: true,
-    websiteUrl: "https://www.kimi.com/code/?aff=cc-switch",
-    apiKeyUrl: "https://platform.kimi.com/console/api-keys?aff=cc-switch",
+    websiteUrl: "https://www.kimi.com/code/?aff=draftgo-launcher",
+    apiKeyUrl: "https://platform.kimi.com/console/api-keys?aff=draftgo-launcher",
     settingsConfig: {
       baseUrl: "https://api.kimi.com/coding/v1",
       apiKey: "",
@@ -188,7 +188,7 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
   {
     name: "PackyCode",
     websiteUrl: "https://www.packyapi.ai",
-    apiKeyUrl: "https://www.packyapi.ai/register?aff=cc-switch",
+    apiKeyUrl: "https://www.packyapi.ai/register?aff=draftgo-launcher",
     settingsConfig: {
       baseUrl: "https://www.packyapi.ai",
       apiKey: "",
@@ -478,7 +478,7 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
   {
     name: "AIGoCode",
     websiteUrl: "https://aigocode.app",
-    apiKeyUrl: "https://aigocode.app/invite/CC-SWITCH",
+    apiKeyUrl: "https://aigocode.app/invite/DRAFTGO-LAUNCHER",
     settingsConfig: {
       baseUrl: "https://api.aigocode.app",
       apiKey: "",
@@ -524,7 +524,7 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
   {
     name: "AICoding",
     websiteUrl: "https://aicoding.inc",
-    apiKeyUrl: "https://aicoding.inc/i/CCSWITCH",
+    apiKeyUrl: "https://aicoding.inc/i/DRAFTGO",
     settingsConfig: {
       baseUrl: "https://api.aicoding.inc",
       apiKey: "",
@@ -606,7 +606,7 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
   {
     name: "APIKEY.FUN",
     websiteUrl: "https://apikey.fun",
-    apiKeyUrl: "https://apikey.fun/register?aff=CCSwitch",
+    apiKeyUrl: "https://apikey.fun/register?aff=DraftGo",
     settingsConfig: {
       baseUrl: "https://api.apikey.fun",
       apiKey: "",
@@ -692,7 +692,7 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
     name: "TeamoRouter",
     websiteUrl: "https://teamorouter.com",
     apiKeyUrl:
-      "https://teamorouter.com/?utm_source=cc_switch&utm_medium=referral&utm_campaign=ai_directory",
+      "https://teamorouter.com/?utm_source=draftgo_launcher&utm_medium=referral&utm_campaign=ai_directory",
     settingsConfig: {
       baseUrl: "https://api.teamorouter.com/v1",
       apiKey: "",
@@ -776,9 +776,9 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
   {
     name: "火山Agentplan",
     websiteUrl:
-      "https://www.volcengine.com/activity/codingplan?ac=MMAP8JTTCAQ2&rc=6J6FV5N2&utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch",
+      "https://www.volcengine.com/activity/codingplan?ac=MMAP8JTTCAQ2&rc=6J6FV5N2&utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo",
     apiKeyUrl:
-      "https://www.volcengine.com/activity/codingplan?ac=MMAP8JTTCAQ2&rc=6J6FV5N2&utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch",
+      "https://www.volcengine.com/activity/codingplan?ac=MMAP8JTTCAQ2&rc=6J6FV5N2&utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo",
     settingsConfig: {
       baseUrl: "https://ark.cn-beijing.volces.com/api/coding/v3",
       apiKey: "",
@@ -813,9 +813,9 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
   {
     name: "BytePlus",
     websiteUrl:
-      "https://www.byteplus.com/en/product/modelark?utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch",
+      "https://www.byteplus.com/en/product/modelark?utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo",
     apiKeyUrl:
-      "https://www.byteplus.com/en/product/modelark?utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch",
+      "https://www.byteplus.com/en/product/modelark?utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo",
     settingsConfig: {
       baseUrl: "https://ark.ap-southeast.bytepluses.com/api/coding/v3",
       apiKey: "",
@@ -850,9 +850,9 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
   {
     name: "DouBaoSeed",
     websiteUrl:
-      "https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey?apikey=%7B%7D&utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch",
+      "https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey?apikey=%7B%7D&utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo",
     apiKeyUrl:
-      "https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey?apikey=%7B%7D&utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch",
+      "https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey?apikey=%7B%7D&utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo",
     settingsConfig: {
       baseUrl: "https://ark.cn-beijing.volces.com/api/v3",
       apiKey: "",
@@ -960,7 +960,7 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
   {
     name: "NekoCode",
     websiteUrl: "https://nekocode.ai",
-    apiKeyUrl: "https://nekocode.ai?aff=CCSWITCH",
+    apiKeyUrl: "https://nekocode.ai?aff=DRAFTGO",
     settingsConfig: {
       baseUrl: "https://nekocode.ai/v1",
       apiKey: "",
@@ -1066,7 +1066,7 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
     nameKey: "providerForm.presets.ucloud",
     websiteUrl: "https://www.compshare.cn",
     apiKeyUrl:
-      "https://www.compshare.cn/coding-plan?ytag=GPU_YY_YX_git_cc-switch",
+      "https://www.compshare.cn/coding-plan?ytag=GPU_YY_YX_git_draftgo-launcher",
     settingsConfig: {
       baseUrl: "https://api.modelverse.cn/v1",
       apiKey: "",
@@ -1106,7 +1106,7 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
     nameKey: "providerForm.presets.ucloudCoding",
     websiteUrl: "https://www.compshare.cn",
     apiKeyUrl:
-      "https://www.compshare.cn/coding-plan?ytag=GPU_YY_YX_git_cc-switch",
+      "https://www.compshare.cn/coding-plan?ytag=GPU_YY_YX_git_draftgo-launcher",
     settingsConfig: {
       baseUrl: "https://cp.compshare.cn/v1",
       apiKey: "",
@@ -1265,7 +1265,7 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
   {
     name: "RightCode",
     websiteUrl: "https://www.rightapi.ai",
-    apiKeyUrl: "https://www.rightapi.ai/register?aff=CCSWITCH",
+    apiKeyUrl: "https://www.rightapi.ai/register?aff=DRAFTGO",
     settingsConfig: {
       baseUrl: "https://www.rightapi.ai/claude",
       apiKey: "",
@@ -1349,7 +1349,7 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
   {
     name: "Cubence",
     websiteUrl: "https://cubence.com",
-    apiKeyUrl: "https://cubence.com/signup?code=CCSWITCH&source=ccs",
+    apiKeyUrl: "https://cubence.com/signup?code=DRAFTGO&source=ccs",
     settingsConfig: {
       baseUrl: "https://api.cubence.com",
       apiKey: "",
@@ -1395,7 +1395,7 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
   {
     name: "CrazyRouter",
     websiteUrl: "https://www.crazyrouter.com",
-    apiKeyUrl: "https://www.crazyrouter.com/register?aff=OZcm&ref=cc-switch",
+    apiKeyUrl: "https://www.crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher",
     settingsConfig: {
       baseUrl: "https://cn.crazyrouter.com/v1",
       apiKey: "",
@@ -1523,7 +1523,7 @@ export const openclawProviderPresets: OpenClawProviderPreset[] = [
     name: "SudoCode.chat",
     websiteUrl: "https://sudocode.chat",
     apiKeyUrl:
-      "https://sudocode.chat/sign-up?aff=CC-SWITCH&utm_source=cc-switch&utm_medium=sponsor&utm_campaign=ccswitch",
+      "https://sudocode.chat/sign-up?aff=DRAFTGO-LAUNCHER&utm_source=draftgo-launcher&utm_medium=sponsor&utm_campaign=draftgo",
     settingsConfig: {
       baseUrl: "https://api.sudocode.chat/v1",
       apiKey: "",

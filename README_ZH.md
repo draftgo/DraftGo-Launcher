@@ -1,18 +1,16 @@
 <div align="center">
 
-# CC Switch
+# DraftGo Launcher
 
 ### Claude Code、Claude Desktop、Codex、Gemini CLI、Grok Build、OpenCode、OpenClaw 和 Hermes Agent 的全方位管理工具
 
-[![Version](https://img.shields.io/github/v/release/farion1231/cc-switch?color=blue&label=version)](https://github.com/farion1231/cc-switch/releases)
-[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](https://github.com/farion1231/cc-switch/releases)
+[![Version](https://img.shields.io/github/v/release/draftgo/DraftGo-Launcher?color=blue&label=version)](https://github.com/draftgo/DraftGo-Launcher/releases)
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](https://github.com/draftgo/DraftGo-Launcher/releases)
 [![Built with Tauri](https://img.shields.io/badge/built%20with-Tauri%202-orange.svg)](https://tauri.app/)
-[![Downloads](https://img.shields.io/github/downloads/farion1231/cc-switch/total)](https://github.com/farion1231/cc-switch/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/draftgo/DraftGo-Launcher/total)](https://github.com/draftgo/DraftGo-Launcher/releases/latest)
 
-<a href="https://trendshift.io/repositories/15372" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15372" alt="farion1231%2Fcc-switch | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-<a href="https://www.star-history.com/#farion1231/cc-switch&Date"><picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=farion1231/cc-switch&theme=dark" /><img alt="Star History Rank" src="https://api.star-history.com/badge?repo=farion1231/cc-switch" width="196" height="55" /></picture></a>
 
-### 🌐 唯一官方网站：**[ccswitch.io](https://ccswitch.io)**
+### 📦 源码与发布：**[github.com/draftgo/DraftGo-Launcher](https://github.com/draftgo/DraftGo-Launcher)**
 
 [English](README.md) | 中文 | [日本語](README_JA.md) | [Deutsch](README_DE.md) | [更新日志](CHANGELOG.md)
 
@@ -20,39 +18,39 @@
 
 ## ❤️赞助商
 
-> [想出现在这里？](mailto:farion1231@gmail.com)
+> [想出现在这里？](mailto:draftgo@users.noreply.github.com)
 
 <details open>
 <summary>点击折叠</summary>
 
-[![Kimi K2.7 Code](https://gcdn.moonshot.cn/growth-cdn/sponsor/kimi-zh.png)](https://platform.kimi.com?aff=cc-switch)
+[![Kimi K2.7 Code](https://gcdn.moonshot.cn/growth-cdn/sponsor/kimi-zh.png)](https://platform.kimi.com?aff=draftgo-launcher)
 
-Kimi K3 是 Moonshot AI 迄今能力最强的模型，也是全球首个开源 3T 级模型。K3 拥有 2.8T 参数、原生视觉能力与 100 万 Token 上下文，在长程编码、知识工作和推理任务中展现前沿性能。使用 CC Switch，可以在各类 Agent 工具中便捷配置和切换 Kimi。**[点击此处开始使用 Kimi](https://platform.kimi.com?aff=cc-switch)**
+Kimi K3 是 Moonshot AI 迄今能力最强的模型，也是全球首个开源 3T 级模型。K3 拥有 2.8T 参数、原生视觉能力与 100 万 Token 上下文，在长程编码、知识工作和推理任务中展现前沿性能。使用 DraftGo Launcher，可以在各类 Agent 工具中便捷配置和切换 Kimi。**[点击此处开始使用 Kimi](https://platform.kimi.com?aff=draftgo-launcher)**
 
-主要进行编程工作？可以试试 **[Kimi Code 订阅](https://www.kimi.com/code/?aff=cc-switch)**。
+主要进行编程工作？可以试试 **[Kimi Code 订阅](https://www.kimi.com/code/?aff=draftgo-launcher)**。
 
 ---
 
 <table>
 <tr>
-<td width="180"><a href="https://www.packyapi.ai/register?aff=cc-switch"><img src="assets/partners/logos/packycode.png" alt="PackyCode" width="150"></a></td>
-<td>感谢 PackyCode 赞助了本项目！PackyCode 是一家稳定、高效的API中转服务商，提供 Claude Code、Codex、Gemini 等多种中转服务。PackyCode 为本软件的用户提供了特别优惠，使用<a href="https://www.packyapi.ai/register?aff=cc-switch">此链接</a>注册并在充值时填写"cc-switch"优惠码，首次充值可以享受9折优惠！</td>
+<td width="180"><a href="https://www.packyapi.ai/register?aff=draftgo-launcher"><img src="assets/partners/logos/packycode.png" alt="PackyCode" width="150"></a></td>
+<td>感谢 PackyCode 赞助了本项目！PackyCode 是一家稳定、高效的API中转服务商，提供 Claude Code、Codex、Gemini 等多种中转服务。PackyCode 为本软件的用户提供了特别优惠，使用<a href="https://www.packyapi.ai/register?aff=draftgo-launcher">此链接</a>注册并在充值时填写"draftgo-launcher"优惠码，首次充值可以享受9折优惠！</td>
 </tr>
 
 <tr>
 <td width="180"><a href="https://zetaapi.ai/go/u117"><img src="assets/partners/logos/zetaapi-banner.png" alt="ZetaAPI" width="150"></a></td>
-<td>感谢 ZetaAPI 赞助本项目！ZetaAPI 主打模型不掺水、保真不降智、价格低至官方价 35 折，平台不混量、不暗中替换低质量模型、不做虚假路由，支持 Claude Code、Codex、Gemini、ChatGPT 等主流模型接入，帮助用户在保证模型质量的同时大幅降低 API 使用成本。同时，ZetaAPI 提供企业级 SLA 稳定性保障、标准接口兼容、一个 Key 接入多模型、快速集成、按量计费等能力，适用于 AI 产品、代码生成、企业内部工具、客服系统、内容生产和自动化流程等场景。若经验证发现模型质量与标称不符，ZetaAPI 承诺假一赔十，让用户用得更稳定、更透明、更放心。通过<a href="https://zetaapi.ai/go/u117">此链接</a>注册，并在首次充值时使用优惠码 CC-SWITCH，即可享受 CC Switch 用户专属的首次充值九折优惠！</td>
+<td>感谢 ZetaAPI 赞助本项目！ZetaAPI 主打模型不掺水、保真不降智、价格低至官方价 35 折，平台不混量、不暗中替换低质量模型、不做虚假路由，支持 Claude Code、Codex、Gemini、ChatGPT 等主流模型接入，帮助用户在保证模型质量的同时大幅降低 API 使用成本。同时，ZetaAPI 提供企业级 SLA 稳定性保障、标准接口兼容、一个 Key 接入多模型、快速集成、按量计费等能力，适用于 AI 产品、代码生成、企业内部工具、客服系统、内容生产和自动化流程等场景。若经验证发现模型质量与标称不符，ZetaAPI 承诺假一赔十，让用户用得更稳定、更透明、更放心。通过<a href="https://zetaapi.ai/go/u117">此链接</a>注册，并在首次充值时使用优惠码 DRAFTGO-LAUNCHER，即可享受 DraftGo Launcher 用户专属的首次充值九折优惠！</td>
 </tr>
 
 <tr>
 <td width="180"><a href="https://apinebula.ai/VjM74M"><img src="assets/partners/logos/apinebula_banner.png" alt="APINebula" width="150"></a></td>
-<td>感谢 APINEBULA 赞助本项目！APINEBULA 是银河录像局旗下的企业级 AI 聚合平台，背靠大平台资源，面向开发者、团队与企业用户提供稳定、高性价比的大模型 API 接入服务。平台聚合 Claude、GPT、Gemini 等主流满血模型，一个接口，接入全球顶尖 AI 大模型，各大模型价格低至 1 折起，支持企业级高并发、正式合同、对公打款与开票服务，适合 AI 编程、Agent 开发、业务系统集成等多种场景！使用<a href="https://apinebula.ai/VjM74M">此链接</a>注册并在充值时填写 <strong>"ccswitch"</strong> 优惠码可享<strong>九折优惠</strong>！</td>
+<td>感谢 APINEBULA 赞助本项目！APINEBULA 是银河录像局旗下的企业级 AI 聚合平台，背靠大平台资源，面向开发者、团队与企业用户提供稳定、高性价比的大模型 API 接入服务。平台聚合 Claude、GPT、Gemini 等主流满血模型，一个接口，接入全球顶尖 AI 大模型，各大模型价格低至 1 折起，支持企业级高并发、正式合同、对公打款与开票服务，适合 AI 编程、Agent 开发、业务系统集成等多种场景！使用<a href="https://apinebula.ai/VjM74M">此链接</a>注册并在充值时填写 <strong>"draftgo"</strong> 优惠码可享<strong>九折优惠</strong>！</td>
 </tr>
 
 <tr>
 <td width="180"><a href="https://www.aicodemirror.ai/register?invitecode=9915W3"><img src="assets/partners/logos/aicodemirror.jpg" alt="AICodeMirror" width="150"></a></td>
 <td>感谢 AICodeMirror 赞助了本项目！AICodeMirror 提供 Claude Code / Codex / Gemini CLI 官方高稳定中转服务，支持企业级高并发、极速开票、7×24 专属技术支持。
-Claude Code / Codex / Gemini 官方渠道低至 3.8 / 0.2 / 0.9 折，充值更有折上折！AICodeMirror 为 CCSwitch 的用户提供了特别福利，通过<a href="https://www.aicodemirror.ai/register?invitecode=9915W3">此链接</a>注册的用户，可享受首充8折，企业客户最高可享 7.5 折！</td>
+Claude Code / Codex / Gemini 官方渠道低至 3.8 / 0.2 / 0.9 折，充值更有折上折！AICodeMirror 为 DraftGo 的用户提供了特别福利，通过<a href="https://www.aicodemirror.ai/register?invitecode=9915W3">此链接</a>注册的用户，可享受首充8折，企业客户最高可享 7.5 折！</td>
 </tr>
 
 <tr>
@@ -64,12 +62,12 @@ Claude Code / Codex / Gemini 官方渠道低至 3.8 / 0.2 / 0.9 折，充值更�
 
 <tr>
 <td width="180"><a href="https://api.fenno.ai/register?redirect=/purchase?tab=subscription%26group=16&aff=P9MR3D3PLCNL"><img src="assets/partners/logos/fenno-banner.png" alt="Fenno.ai" width="150"></a></td>
-<td>感谢 Fenno.ai 赞助了本项目！Fenno.ai 是一家稳定、高效的 API 中转服务商，目前主要提供 Codex 中转服务，兼容 OpenAI 及 Anthropic 协议，可灵活接入 Codex、Claude Code、OpenCode 等主流编程工具，可稳定支撑千亿 Token/日的企业级调用需求，支持国内及海外主体公对公结算、开票。Fenno.ai 为 CC Switch 的用户提供了专属福利：通过<a href="https://api.fenno.ai/register?redirect=/purchase?tab=subscription%26group=16&aff=P9MR3D3PLCNL">此链接</a>即可订阅 9.9 元/150 刀额度的超值 Coding Plan，邀请好友最高可享 20% 奖励，多邀多得！</td>
+<td>感谢 Fenno.ai 赞助了本项目！Fenno.ai 是一家稳定、高效的 API 中转服务商，目前主要提供 Codex 中转服务，兼容 OpenAI 及 Anthropic 协议，可灵活接入 Codex、Claude Code、OpenCode 等主流编程工具，可稳定支撑千亿 Token/日的企业级调用需求，支持国内及海外主体公对公结算、开票。Fenno.ai 为 DraftGo Launcher 的用户提供了专属福利：通过<a href="https://api.fenno.ai/register?redirect=/purchase?tab=subscription%26group=16&aff=P9MR3D3PLCNL">此链接</a>即可订阅 9.9 元/150 刀额度的超值 Coding Plan，邀请好友最高可享 20% 奖励，多邀多得！</td>
 </tr>
 
 <tr>
 <td width="180"><a href="https://runapi.co/register?aff=iOKB"><img src="assets/partners/logos/runapi.jpg" alt="RunAPI" width="150"></a></td>
-<td>感谢 RunAPI 赞助本项目！RunAPI 是高效稳定的 AI 模型 API 中转平台，一个 API Key 即可访问 OpenAI、Claude、Gemini、DeepSeek、Grok 等 150+ 主流模型，低至 1 折，极其稳定，可以无缝兼容 Claude Code、OpenClaw 等工具。RunAPI为CC switch的用户提供了特别福利，使用<a href="https://runapi.co/register?aff=iOKB">此链接</a>注册并首次充值即可享受10%的优惠折扣！</td>
+<td>感谢 RunAPI 赞助本项目！RunAPI 是高效稳定的 AI 模型 API 中转平台，一个 API Key 即可访问 OpenAI、Claude、Gemini、DeepSeek、Grok 等 150+ 主流模型，低至 1 折，极其稳定，可以无缝兼容 Claude Code、OpenClaw 等工具。RunAPI为DraftGo Launcher的用户提供了特别福利，使用<a href="https://runapi.co/register?aff=iOKB">此链接</a>注册并首次充值即可享受10%的优惠折扣！</td>
 </tr>
 
 <tr>
@@ -78,13 +76,13 @@ Claude Code / Codex / Gemini 官方渠道低至 3.8 / 0.2 / 0.9 折，充值更�
 </tr>
 
 <tr>
-<td width="180"><a href="https://aigocode.app/invite/CC-SWITCH"><img src="assets/partners/logos/aigocode.png" alt="AIGoCode" width="150"></a></td>
-<td>感谢 AIGoCode 赞助了本项目！AIGoCode 是一个集成了 Claude Code、Codex 以及 Gemini 最新模型的一站式平台，为你提供稳定、高效且高性价比的AI编程服务。本站提供灵活的订阅计划，零封号风险，国内直连，无需魔法，极速响应。AIGoCode 为 CC Switch 的用户提供了特别福利，通过<a href="https://aigocode.app/invite/CC-SWITCH">此链接</a>注册的用户首次充值可以获得额外10%奖励额度！</td>
+<td width="180"><a href="https://aigocode.app/invite/DRAFTGO-LAUNCHER"><img src="assets/partners/logos/aigocode.png" alt="AIGoCode" width="150"></a></td>
+<td>感谢 AIGoCode 赞助了本项目！AIGoCode 是一个集成了 Claude Code、Codex 以及 Gemini 最新模型的一站式平台，为你提供稳定、高效且高性价比的AI编程服务。本站提供灵活的订阅计划，零封号风险，国内直连，无需魔法，极速响应。AIGoCode 为 DraftGo Launcher 的用户提供了特别福利，通过<a href="https://aigocode.app/invite/DRAFTGO-LAUNCHER">此链接</a>注册的用户首次充值可以获得额外10%奖励额度！</td>
 </tr>
 
 <tr>
-<td width="180"><a href="https://aicoding.inc/i/CCSWITCH"><img src="assets/partners/logos/aicoding.jpg" alt="AICoding" width="150"></a></td>
-<td>感谢 AICoding 赞助了本项目！AICoding —— 全球大模型 API 超值中转服务！Claude Code 1.9 折，GPT 0.1 折，已为数百家企业提供高性价比 AI 服务。支持 Claude Code、GPT、Gemini 及国内主流模型，企业级高并发、极速开票、7×24 专属技术支持，通过<a href="https://aicoding.inc/i/CCSWITCH">此链接</a> 注册的 CC Switch 用户，首充可享受九折优惠！</td>
+<td width="180"><a href="https://aicoding.inc/i/DRAFTGO"><img src="assets/partners/logos/aicoding.jpg" alt="AICoding" width="150"></a></td>
+<td>感谢 AICoding 赞助了本项目！AICoding —— 全球大模型 API 超值中转服务！Claude Code 1.9 折，GPT 0.1 折，已为数百家企业提供高性价比 AI 服务。支持 Claude Code、GPT、Gemini 及国内主流模型，企业级高并发、极速开票、7×24 专属技术支持，通过<a href="https://aicoding.inc/i/DRAFTGO">此链接</a> 注册的 DraftGo Launcher 用户，首充可享受九折优惠！</td>
 </tr>
 
 <tr>
@@ -93,8 +91,8 @@ Claude Code / Codex / Gemini 官方渠道低至 3.8 / 0.2 / 0.9 折，充值更�
 </tr>
 
 <tr>
-<td width="180"><a href="https://apikey.fun/register?aff=CCSwitch"><img src="assets/partners/logos/apikey_banner.png" alt="APIKEY.FUN" width="150"></a></td>
-<td>感谢 APIKEY.FUN 赞助本项目！APIKEY.FUN 是一家专业的企业级 AI 中转站，致力于为企业和个人开发者提供稳定、高效、低成本的 AI 模型 API 接入服务。平台支持 Claude、OpenAI、Gemini 等主流热门模型，价格低至官方原价的 7%。通过本项目<a href="https://apikey.fun/register?aff=CCSwitch">专属链接</a>注册，还可享受最高 <strong>充值永久 95 折</strong> 专属优惠。</td>
+<td width="180"><a href="https://apikey.fun/register?aff=DraftGo"><img src="assets/partners/logos/apikey_banner.png" alt="APIKEY.FUN" width="150"></a></td>
+<td>感谢 APIKEY.FUN 赞助本项目！APIKEY.FUN 是一家专业的企业级 AI 中转站，致力于为企业和个人开发者提供稳定、高效、低成本的 AI 模型 API 接入服务。平台支持 Claude、OpenAI、Gemini 等主流热门模型，价格低至官方原价的 7%。通过本项目<a href="https://apikey.fun/register?aff=DraftGo">专属链接</a>注册，还可享受最高 <strong>充值永久 95 折</strong> 专属优惠。</td>
 </tr>
 
 <tr>
@@ -104,14 +102,14 @@ Claude Code / Codex / Gemini 官方渠道低至 3.8 / 0.2 / 0.9 折，充值更�
 
 <tr>
 <td width="180"><a href="https://code0.ai/agent/register/B2XHxGjGmRvqgznY"><img src="assets/partners/logos/code0.png" alt="code0.ai" width="150"></a></td>
-<td>感谢 <a href="https://code0.ai/agent/register/B2XHxGjGmRvqgznY">code0.ai</a> 赞助本项目！code0.ai 是专为开发者打造的 AI 编程服务平台，支持 Claude Code、Codex、Gemini 等主流 AI 编程能力，帮助个人开发者和团队更稳定、更高效地使用 AI Agent 完成代码开发、调试与自动化任务。ccswitch 用户可通过 <a href="https://code0.ai/agent/register/B2XHxGjGmRvqgznY">code0.ai 官网</a> 联系客服领取测试额度，体验高效稳定的 AI 编程服务！</td>
+<td>感谢 <a href="https://code0.ai/agent/register/B2XHxGjGmRvqgznY">code0.ai</a> 赞助本项目！code0.ai 是专为开发者打造的 AI 编程服务平台，支持 Claude Code、Codex、Gemini 等主流 AI 编程能力，帮助个人开发者和团队更稳定、更高效地使用 AI Agent 完成代码开发、调试与自动化任务。draftgo 用户可通过 <a href="https://code0.ai/agent/register/B2XHxGjGmRvqgznY">code0.ai 官网</a> 联系客服领取测试额度，体验高效稳定的 AI 编程服务！</td>
 </tr>
 
 <tr>
-<td width="180"><a href="https://teamorouter.com/zh?utm_source=cc_switch&utm_medium=referral&utm_campaign=ai_directory"><img src="assets/partners/logos/TeamoRouter-banner.png" alt="TeamoRouter" width="150"></a></td>
+<td width="180"><a href="https://teamorouter.com/zh?utm_source=draftgo_launcher&utm_medium=referral&utm_campaign=ai_directory"><img src="assets/partners/logos/TeamoRouter-banner.png" alt="TeamoRouter" width="150"></a></td>
 <td>感谢 TeamoRouter 赞助本项目！TeamoRouter 是一款面向开发者、AI 团队和企业的企业级 Agentic LLM 网关。无需任何订阅，你就可以通过一个统一 API 访问 Claude Code、Codex、Gemini CLI、OpenAI Codex 以及其他热门 AI Agent，同时享受最高可达 90% 折扣的 API 价格。
 不同于常见的 API 中转服务，TeamoRouter 聚合了数百家官方模型提供商和可信基础设施合作伙伴，包括 OpenAI、Anthropic、Vertex、Azure 和 AWS Bedrock。每个提供商都经过验证，确保 100% 兼容 Agent 协议，并具备可靠的缓存性能和请求可追踪性，从而提供稳定质量，而不是反向工程或缩水后的接口。平台提供接近官方水平的 TTFT、99.6% SLA、最高 5,000 QPM 的企业级吞吐量，以及行业领先的缓存命中率，可大幅降低长时间运行的 Agent 工作流中的 token 成本。
-TeamoRouter 还提供企业级功能，包括集中账单、团队管理、BYOK、智能路由、用量分析、动态提供商优化和专属支持。为了获得更简单的使用体验，Teamo Desktop 支持你一键使用 Claude Code、Codex、Gemini CLI 和其他热门 AI Agent，无需管理 API Key，也无需手动配置网关。新用户通过<a href="https://teamorouter.com/zh?utm_source=cc_switch&utm_medium=referral&utm_campaign=ai_directory">此链接</a>注册，首次充值可享受 10% 折扣。</td>
+TeamoRouter 还提供企业级功能，包括集中账单、团队管理、BYOK、智能路由、用量分析、动态提供商优化和专属支持。为了获得更简单的使用体验，Teamo Desktop 支持你一键使用 Claude Code、Codex、Gemini CLI 和其他热门 AI Agent，无需管理 API Key，也无需手动配置网关。新用户通过<a href="https://teamorouter.com/zh?utm_source=draftgo_launcher&utm_medium=referral&utm_campaign=ai_directory">此链接</a>注册，首次充值可享受 10% 折扣。</td>
 </tr>
 
 <tr>
@@ -125,8 +123,8 @@ TeamoRouter 还提供企业级功能，包括集中账单、团队管理、BYOK�
 </tr>
 
 <tr>
-<td width="180"><a href="https://www.volcengine.com/activity/ai618?utm_campaign=hw&utm_content=hw&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch"><img src="assets/partners/logos/huoshan.png" alt="HuoShan" width="150"></a></td>
-<td>感谢火山方舟 Agent Plan 模型赞助了本项目！方舟 Agent Plan 模型订阅套餐集成了包含 Doubao-Seed、Doubao-Seedance、Doubao-Seedream 等在内的字节跳动自研 SOTA 级模型，覆盖文本、代码、图像、视频等多模态任务。最新支持 MiniMax-M3、DeepSeek-V4 系列、GLM-5.1、Doubao-Seed-2.0 系列、Kimi-K2.6 等模型，工具不限。超全模态模型与 Harness 升级一步到位，深度支持 Agent 框架与 AI 编程工具。一次订阅，可以为不同任务切换合适的 AI 引擎。方舟 Coding Plan 为 CC Switch 的用户提供了专属福利：通过<a href="https://www.volcengine.com/activity/ai618?utm_campaign=hw&utm_content=hw&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch">此链接</a>订阅方舟 Coding Plan，新客户首两个月享 2.5 折优惠，再用专属邀请码 6J6FV5N2 领取奖励叠加 9.5 折，低至 9.4 元/月！<a href="https://www.byteplus.com/en/product/modelark?utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch">>>For developers outside Mainland China, please click here</a></td>
+<td width="180"><a href="https://www.volcengine.com/activity/ai618?utm_campaign=hw&utm_content=hw&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo"><img src="assets/partners/logos/huoshan.png" alt="HuoShan" width="150"></a></td>
+<td>感谢火山方舟 Agent Plan 模型赞助了本项目！方舟 Agent Plan 模型订阅套餐集成了包含 Doubao-Seed、Doubao-Seedance、Doubao-Seedream 等在内的字节跳动自研 SOTA 级模型，覆盖文本、代码、图像、视频等多模态任务。最新支持 MiniMax-M3、DeepSeek-V4 系列、GLM-5.1、Doubao-Seed-2.0 系列、Kimi-K2.6 等模型，工具不限。超全模态模型与 Harness 升级一步到位，深度支持 Agent 框架与 AI 编程工具。一次订阅，可以为不同任务切换合适的 AI 引擎。方舟 Coding Plan 为 DraftGo Launcher 的用户提供了专属福利：通过<a href="https://www.volcengine.com/activity/ai618?utm_campaign=hw&utm_content=hw&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo">此链接</a>订阅方舟 Coding Plan，新客户首两个月享 2.5 折优惠，再用专属邀请码 6J6FV5N2 领取奖励叠加 9.5 折，低至 9.4 元/月！<a href="https://www.byteplus.com/en/product/modelark?utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo">>>For developers outside Mainland China, please click here</a></td>
 </tr>
 
 <tr>
@@ -135,8 +133,8 @@ TeamoRouter 还提供企业级功能，包括集中账单、团队管理、BYOK�
 </tr>
 
 <tr>
-<td width="180"><a href="https://nekocode.ai?aff=CCSWITCH"><img src="assets/partners/logos/nekocode-banner.png" alt="NekoCode" width="150"></a></td>
-<td>感谢 <a href="https://nekocode.ai?aff=CCSWITCH">NekoCode</a> 赞助本项目！NekoCode 为开发者提供稳定、高效、可靠的 Claude、Codex 等 AI 模型 API 中转服务，价格透明，接入便捷，支持灵活的按量计费。CC Switch 用户专享 9 折福利：通过 <a href="https://nekocode.ai?aff=CCSWITCH">此链接</a> 注册，并在充值时输入优惠码 <code>cc-switch</code>，即可享受充值 9 折优惠！</td>
+<td width="180"><a href="https://nekocode.ai?aff=DRAFTGO"><img src="assets/partners/logos/nekocode-banner.png" alt="NekoCode" width="150"></a></td>
+<td>感谢 <a href="https://nekocode.ai?aff=DRAFTGO">NekoCode</a> 赞助本项目！NekoCode 为开发者提供稳定、高效、可靠的 Claude、Codex 等 AI 模型 API 中转服务，价格透明，接入便捷，支持灵活的按量计费。DraftGo Launcher 用户专享 9 折福利：通过 <a href="https://nekocode.ai?aff=DRAFTGO">此链接</a> 注册，并在充值时输入优惠码 <code>draftgo-launcher</code>，即可享受充值 9 折优惠！</td>
 </tr>
 
 <tr>
@@ -145,13 +143,13 @@ TeamoRouter 还提供企业级功能，包括集中账单、团队管理、BYOK�
 </tr>
 
 <tr>
-<td width="180"><a href="https://www.atlascloud.ai/coding-plan?utm_source=github&utm_campaign=cc-switch"><img src="assets/partners/logos/atlascloud_banner.png" alt="Atlas Cloud" width="150"></a></td>
-<td>Atlas Cloud 是一个全模态 AI 推理平台，通过单一 API 为开发者提供视频生成、图像生成及 LLM 接入。免去繁琐的多供应商对接，一次连接即可调用 300+ 款全模态精选模型。立即查看 Atlas Cloud 全新<a href="https://www.atlascloud.ai/coding-plan?utm_source=github&utm_campaign=cc-switch">“编程计划”</a>优惠，获取更具性价比的 API 接入！</td>
+<td width="180"><a href="https://www.atlascloud.ai/coding-plan?utm_source=github&utm_campaign=draftgo-launcher"><img src="assets/partners/logos/atlascloud_banner.png" alt="Atlas Cloud" width="150"></a></td>
+<td>Atlas Cloud 是一个全模态 AI 推理平台，通过单一 API 为开发者提供视频生成、图像生成及 LLM 接入。免去繁琐的多供应商对接，一次连接即可调用 300+ 款全模态精选模型。立即查看 Atlas Cloud 全新<a href="https://www.atlascloud.ai/coding-plan?utm_source=github&utm_campaign=draftgo-launcher">“编程计划”</a>优惠，获取更具性价比的 API 接入！</td>
 </tr>
 
 <tr>
-<td width="180"><a href="https://www.compshare.cn/coding-plan?ytag=GPU_YY_YX_git_cc-switch"><img src="assets/partners/logos/ucloud.png" alt="优云智算" width="150"></a></td>
-<td>感谢优云智算赞助了本项目！优云智算是UCloud旗下AI云平台，提供稳定、全面的国内外模型API，仅一个key即可调用。主打包月、按次的高性价比 国模Coding Plan套餐，同时提供官转稳定海外模型。支持接入 Claude Code、Codex 及 API 调用。支持企业高并发、7*24技术支持、自助开票。通过<a href="https://www.compshare.cn/coding-plan?ytag=GPU_YY_YX_git_cc-switch">此链接</a>注册的用户，可得免费5元平台体验金！</td>
+<td width="180"><a href="https://www.compshare.cn/coding-plan?ytag=GPU_YY_YX_git_draftgo-launcher"><img src="assets/partners/logos/ucloud.png" alt="优云智算" width="150"></a></td>
+<td>感谢优云智算赞助了本项目！优云智算是UCloud旗下AI云平台，提供稳定、全面的国内外模型API，仅一个key即可调用。主打包月、按次的高性价比 国模Coding Plan套餐，同时提供官转稳定海外模型。支持接入 Claude Code、Codex 及 API 调用。支持企业高并发、7*24技术支持、自助开票。通过<a href="https://www.compshare.cn/coding-plan?ytag=GPU_YY_YX_git_draftgo-launcher">此链接</a>注册的用户，可得免费5元平台体验金！</td>
 </tr>
 
 <tr>
@@ -166,12 +164,12 @@ TeamoRouter 还提供企业级功能，包括集中账单、团队管理、BYOK�
 
 <tr>
 <td width="180"><a href="https://www.micuapi.ai/register?aff=aOYQ"><img src="assets/partners/logos/mikubanner.svg" alt="Micu" width="150"></a></td>
-<td>感谢 米醋API 赞助了本项目！米醋API 是一家致力于提供极致性价比与高稳定性的全球大模型中转服务商。米醋API 背后有实体企业做核心保障，杜绝跑路风险，支持极速正规开票！我们主打“试错零成本”：1 元起充低门槛，0 手续费随时退款！米醋API 为本软件的用户提供了特别优惠，使用<a href="https://www.micuapi.ai/register?aff=aOYQ">此链接</a>注册并在充值时填写"ccswitch"优惠码可享九折优惠！</td>
+<td>感谢 米醋API 赞助了本项目！米醋API 是一家致力于提供极致性价比与高稳定性的全球大模型中转服务商。米醋API 背后有实体企业做核心保障，杜绝跑路风险，支持极速正规开票！我们主打“试错零成本”：1 元起充低门槛，0 手续费随时退款！米醋API 为本软件的用户提供了特别优惠，使用<a href="https://www.micuapi.ai/register?aff=aOYQ">此链接</a>注册并在充值时填写"draftgo"优惠码可享九折优惠！</td>
 </tr>
 
 <tr>
-<td width="180"><a href="https://www.rightapi.ai/register?aff=CCSWITCH"><img src="assets/partners/logos/rightcode.jpg" alt="RightCode" width="150"></a></td>
-<td>感谢 Right Code 赞助了本项目！Right Code 稳定提供 Claude Code、Codex、Gemini 等模型的中转服务，并可选按量、包月两种计费模式。充值即可开票，企业、团队用户一对一对接。同时为 CC Switch 的用户提供了特别优惠：通过<a href="https://www.rightapi.ai/register?aff=CCSWITCH">此链接</a>注册，每次充值均可获得实付金额5%的按量额度！</td>
+<td width="180"><a href="https://www.rightapi.ai/register?aff=DRAFTGO"><img src="assets/partners/logos/rightcode.jpg" alt="RightCode" width="150"></a></td>
+<td>感谢 Right Code 赞助了本项目！Right Code 稳定提供 Claude Code、Codex、Gemini 等模型的中转服务，并可选按量、包月两种计费模式。充值即可开票，企业、团队用户一对一对接。同时为 DraftGo Launcher 的用户提供了特别优惠：通过<a href="https://www.rightapi.ai/register?aff=DRAFTGO">此链接</a>注册，每次充值均可获得实付金额5%的按量额度！</td>
 </tr>
 
 <tr>
@@ -180,13 +178,13 @@ TeamoRouter 还提供企业级功能，包括集中账单、团队管理、BYOK�
 </tr>
 
 <tr>
-<td width="180"><a href="https://cubence.com/signup?code=CCSWITCH&source=ccs"><img src="assets/partners/logos/cubence.png" alt="Cubence" width="150"></a></td>
-<td>感谢 Cubence 赞助本项目！Cubence 是一家可靠高效的 API 中继服务提供商，提供对 Claude Code、Codex、Gemini 等模型的中继服务，并提供按量、包月等灵活的计费方式。Cubence 为 CC Switch 的用户提供了特别优惠：使用 <a href="https://cubence.com/signup?code=CCSWITCH&source=ccs">此链接</a> 注册，并在充值时输入 "CCSWITCH" 优惠码，每次充值均可享受九折优惠！</td>
+<td width="180"><a href="https://cubence.com/signup?code=DRAFTGO&source=ccs"><img src="assets/partners/logos/cubence.png" alt="Cubence" width="150"></a></td>
+<td>感谢 Cubence 赞助本项目！Cubence 是一家可靠高效的 API 中继服务提供商，提供对 Claude Code、Codex、Gemini 等模型的中继服务，并提供按量、包月等灵活的计费方式。Cubence 为 DraftGo Launcher 的用户提供了特别优惠：使用 <a href="https://cubence.com/signup?code=DRAFTGO&source=ccs">此链接</a> 注册，并在充值时输入 "DRAFTGO" 优惠码，每次充值均可享受九折优惠！</td>
 </tr>
 
 <tr>
-<td width="180"><a href="https://crazyrouter.com/register?aff=OZcm&ref=cc-switch"><img src="assets/partners/logos/crazyrouter.png" alt="Crazyrouter" width="150"></a></td>
-<td>感谢 Crazyrouter 赞助了本项目！Crazyrouter 是一个高性能 AI API 聚合平台——一个 API Key 即可访问 300+ 模型，包括 Claude Code、Codex、Gemini CLI 等。全部模型低至官方定价的 55%，支持自动故障转移、智能路由和无限并发。Crazyrouter 为 CC Switch 用户提供了专属优惠：通过<a href="https://crazyrouter.com/register?aff=OZcm&ref=cc-switch">此链接</a>注册后联系客服即可领取 <strong>$2 免费额度</strong>，首次充值时输入优惠码 `CCSWITCH` 还可获得额外 <strong>30% 奖励额度</strong>！</td>
+<td width="180"><a href="https://crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher"><img src="assets/partners/logos/crazyrouter.png" alt="Crazyrouter" width="150"></a></td>
+<td>感谢 Crazyrouter 赞助了本项目！Crazyrouter 是一个高性能 AI API 聚合平台——一个 API Key 即可访问 300+ 模型，包括 Claude Code、Codex、Gemini CLI 等。全部模型低至官方定价的 55%，支持自动故障转移、智能路由和无限并发。Crazyrouter 为 DraftGo Launcher 用户提供了专属优惠：通过<a href="https://crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher">此链接</a>注册后联系客服即可领取 <strong>$2 免费额度</strong>，首次充值时输入优惠码 `DRAFTGO` 还可获得额外 <strong>30% 奖励额度</strong>！</td>
 </tr>
 
 <tr>
@@ -199,11 +197,11 @@ TeamoRouter 还提供企业级功能，包括集中账单、团队管理、BYOK�
 
 </details>
 
-## 为什么选择 CC Switch？
+## 为什么选择 DraftGo Launcher？
 
 现代 AI 编程依赖于 Claude Code、Claude Desktop、Codex、Gemini CLI、Grok Build、OpenCode、OpenClaw 和 Hermes 等工具——但每个工具都有自己的配置格式。切换 API 供应商意味着手动编辑 JSON、TOML 或 `.env` 文件，而在多个工具之间缺乏一个统一管理 MCP, SKILLS 的方式。
 
-**CC Switch** 为你提供一个桌面应用来管理所有支持的 AI 工具。无需手动编辑配置文件，你将获得一个可视化界面，一键将供应商导入应用，一键在不同的供应商之间进行切换，内置 50+ 供应商预设、统一的 MCP, SKILLS 管理以及系统托盘即时切换功能——所有操作都基于可靠的 SQLite 数据库和原子写入机制，保护你的配置不被损坏。
+**DraftGo Launcher** 为你提供一个桌面应用来管理所有支持的 AI 工具。无需手动编辑配置文件，你将获得一个可视化界面，一键将供应商导入应用，一键在不同的供应商之间进行切换，内置 50+ 供应商预设、统一的 MCP, SKILLS 管理以及系统托盘即时切换功能——所有操作都基于可靠的 SQLite 数据库和原子写入机制，保护你的配置不被损坏。
 
 - **一个应用，八个工具** — 在单一界面中管理 Claude Code、Claude Desktop、Codex、Gemini CLI、Grok Build、OpenCode、OpenClaw 和 Hermes
 - **告别手动编辑** — 50+ 供应商预设，包括 AWS Bedrock、NVIDIA NIM 和社区中转服务；一键即可切换
@@ -252,15 +250,15 @@ TeamoRouter 还提供企业级功能，包括集中账单、团队管理、BYOK�
 ### 系统与平台
 
 - **云同步** — 自定义配置目录（Dropbox、OneDrive、iCloud、坚果云、NAS）及 WebDAV 服务器同步
-- **Deep Link** (`ccswitch://`) — 通过 URL 一键导入供应商、MCP 服务器、提示词和技能
+- **Deep Link** (`draftgo://`) — 通过 URL 一键导入供应商、MCP 服务器、提示词和技能
 - 深色 / 浅色 / 跟随系统主题、开机自启、自动更新、原子写入、自动备份、国际化（简中/繁中/英/日）
 
 ## 常见问题
 
 <details>
-<summary><strong>CC Switch 支持哪些 AI 工具？</strong></summary>
+<summary><strong>DraftGo Launcher 支持哪些 AI 工具？</strong></summary>
 
-CC Switch 支持八个工具：**Claude Code**、**Claude Desktop**、**Codex**、**Gemini CLI**、**Grok Build**、**OpenCode**、**OpenClaw** 和 **Hermes**。每个工具都有专属的供应商预设和配置管理。
+DraftGo Launcher 支持八个工具：**Claude Code**、**Claude Desktop**、**Codex**、**Gemini CLI**、**Grok Build**、**OpenCode**、**OpenClaw** 和 **Hermes**。每个工具都有专属的供应商预设和配置管理。
 
 </details>
 
@@ -274,14 +272,14 @@ CC Switch 支持八个工具：**Claude Code**、**Claude Desktop**、**Codex**�
 <details>
 <summary><strong>切换供应商之后我的插件配置怎么不见了？</strong></summary>
 
-CC Switch 使用“通用配置片段”功能，在不同的供应商之间传递 Key 和请求地址之外的通用数据，您可以在“编辑供应商”菜单的“通用配置面板”里，点击“从当前供应商提取”，把所有的通用数据提取到通用配置中，之后在新建“供应商”的时候，只要勾选“应用通用配置”（默认勾选），就会把插件等数据写入到新的供应商配置中。您的所有配置项都会保存在运行本软件的时候，第一次导入的默认供应商里面，不会丢失。
+DraftGo Launcher 使用“通用配置片段”功能，在不同的供应商之间传递 Key 和请求地址之外的通用数据，您可以在“编辑供应商”菜单的“通用配置面板”里，点击“从当前供应商提取”，把所有的通用数据提取到通用配置中，之后在新建“供应商”的时候，只要勾选“应用通用配置”（默认勾选），就会把插件等数据写入到新的供应商配置中。您的所有配置项都会保存在运行本软件的时候，第一次导入的默认供应商里面，不会丢失。
 
 </details>
 
 <details>
 <summary><strong>macOS 安装</strong></summary>
 
-CC Switch macOS 版本已通过 Apple 代码签名和公证，可直接下载安装，无需额外操作。推荐使用 `.dmg` 安装包。
+DraftGo Launcher macOS 版本已通过 Apple 代码签名和公证，可直接下载安装，无需额外操作。推荐使用 `.dmg` 安装包。
 
 </details>
 
@@ -304,11 +302,11 @@ CC Switch macOS 版本已通过 Apple 代码签名和公证，可直接下载安
 <details>
 <summary><strong>我的数据存储在哪里？</strong></summary>
 
-- **数据库**：`~/.cc-switch/cc-switch.db`（SQLite — 供应商、MCP、提示词、技能）
-- **本地设置**：`~/.cc-switch/settings.json`（设备级 UI 偏好设置）
-- **备份**：`~/.cc-switch/backups/`（自动轮换，保留最近 10 个）
-- **SKILLS**：`~/.cc-switch/skills/`（默认通过软链接连接到对应应用）
-- **技能备份**：`~/.cc-switch/skill-backups/`（卸载前自动创建，保留最近 20 个）
+- **数据库**：`~/.draftgo-launcher/draftgo-launcher.db`（SQLite — 供应商、MCP、提示词、技能）
+- **本地设置**：`~/.draftgo-launcher/settings.json`（设备级 UI 偏好设置）
+- **备份**：`~/.draftgo-launcher/backups/`（自动轮换，保留最近 10 个）
+- **SKILLS**：`~/.draftgo-launcher/skills/`（默认通过软链接连接到对应应用）
+- **技能备份**：`~/.draftgo-launcher/skill-backups/`（卸载前自动创建，保留最近 20 个）
 
 </details>
 
@@ -318,10 +316,10 @@ CC Switch macOS 版本已通过 Apple 代码签名和公证，可直接下载安
 AppImage 会强制 `GDK_BACKEND=x11`（走 XWayland）以规避历史上的原生 Wayland 崩溃。但在较新的 Wayland + NVIDIA 环境下，这会导致网页内容区点不动（标题栏按钮仍可点）、窗口缩放后黑屏。可用内置的逃生开关切回原生 Wayland：
 
 ```bash
-CC_SWITCH_GDK_BACKEND=wayland ./CC-Switch-*.AppImage
+DRAFTGO_LAUNCHER_GDK_BACKEND=wayland ./DraftGo-Launcher-*.AppImage
 ```
 
-如果你是从桌面图标启动的，请把它写进 `.desktop` 的 `Exec=` 行（如 `env CC_SWITCH_GDK_BACKEND=wayland /path/to/AppImage`），或在会话环境中设置。该变量是通用的：在 tiling Wayland 合成器（sway/Hyprland）下若出现点击失效，可反过来设 `CC_SWITCH_GDK_BACKEND=x11`。不设置则保持默认行为。
+如果你是从桌面图标启动的，请把它写进 `.desktop` 的 `Exec=` 行（如 `env DRAFTGO_LAUNCHER_GDK_BACKEND=wayland /path/to/AppImage`），或在会话环境中设置。该变量是通用的：在 tiling Wayland 合成器（sway/Hyprland）下若出现点击失效，可反过来设 `DRAFTGO_LAUNCHER_GDK_BACKEND=x11`。不设置则保持默认行为。
 
 </details>
 
@@ -359,43 +357,43 @@ CC_SWITCH_GDK_BACKEND=wayland ./CC-Switch-*.AppImage
 
 ### Windows 用户
 
-从 [Releases](../../releases) 页面下载最新版本的 `CC-Switch-v{版本号}-Windows.msi` 安装包或 `CC-Switch-v{版本号}-Windows-Portable.zip` 绿色版。
+从 [Releases](../../releases) 页面下载最新版本的 `DraftGo-Launcher-v{版本号}-Windows.msi` 安装包或 `DraftGo-Launcher-v{版本号}-Windows-Portable.zip` 绿色版。
 
 ### macOS 用户
 
 **方式一：通过 Homebrew 安装（推荐）**
 
 ```bash
-brew install --cask cc-switch
+brew install --cask draftgo-launcher
 ```
 
 更新：
 
 ```bash
-brew upgrade --cask cc-switch
+brew upgrade --cask draftgo-launcher
 ```
 
 **方式二：手动下载**
 
-从 [Releases](../../releases) 页面下载 `CC-Switch-v{版本号}-macOS.dmg`（推荐）或 `.zip`。
+从 [Releases](../../releases) 页面下载 `DraftGo-Launcher-v{版本号}-macOS.dmg`（推荐）或 `.zip`。
 
-> **注意**：CC Switch macOS 版本已通过 Apple 代码签名和公证，可直接安装打开。
+> **注意**：DraftGo Launcher macOS 版本已通过 Apple 代码签名和公证，可直接安装打开。
 
 ### Arch Linux 用户
 
 **通过 paru 安装（推荐）**
 
 ```bash
-paru -S cc-switch-bin
+paru -S draftgo-launcher-bin
 ```
 
 ### Linux 用户
 
 从 [Releases](../../releases) 页面下载最新版本的 Linux 安装包：
 
-- `CC-Switch-v{版本号}-Linux.deb`（Debian/Ubuntu）
-- `CC-Switch-v{版本号}-Linux.rpm`（Fedora/RHEL/openSUSE）
-- `CC-Switch-v{版本号}-Linux.AppImage`（通用）
+- `DraftGo-Launcher-v{版本号}-Linux.deb`（Debian/Ubuntu）
+- `DraftGo-Launcher-v{版本号}-Linux.rpm`（Fedora/RHEL/openSUSE）
+- `DraftGo-Launcher-v{版本号}-Linux.AppImage`（通用）
 
 > **Flatpak**：官方 Release 不包含 Flatpak 包。如需使用，可从 `.deb` 自行构建 — 参见 [`flatpak/README.md`](flatpak/README.md)。
 
@@ -424,7 +422,7 @@ paru -S cc-switch-bin
 
 **核心设计模式**
 
-- **SSOT**（单一事实源）：所有数据存储在 `~/.cc-switch/cc-switch.db`（SQLite）
+- **SSOT**（单一事实源）：所有数据存储在 `~/.draftgo-launcher/draftgo-launcher.db`（SQLite）
 - **双层存储**：SQLite 存储可同步数据，JSON 存储设备级设置
 - **双向同步**：切换时写入 live 文件，编辑当前供应商时从 live 回填
 - **原子写入**：临时文件 + 重命名模式防止配置损坏
@@ -587,10 +585,6 @@ pnpm test:unit --coverage
 - 通过单元测试：`pnpm test:unit`
 
 新功能开发前，欢迎先开 Issue 讨论实现方案，不适合项目的功能性 PR 有可能会被关闭。
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=farion1231/cc-switch&type=Date)](https://www.star-history.com/#farion1231/cc-switch&Date)
 
 ## License
 

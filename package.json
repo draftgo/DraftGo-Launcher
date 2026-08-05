@@ -1,6 +1,6 @@
 {
-  "name": "cc-switch",
-  "version": "3.19.1",
+  "name": "draftgo-launcher",
+  "version": "1.0.0",
   "description": "All-in-One Assistant for Claude Code, Codex & Gemini CLI",
   "type": "module",
   "scripts": {
@@ -16,7 +16,7 @@
     "test:unit:watch": "vitest watch"
   },
   "keywords": [],
-  "author": "Jason Young",
+  "author": "DraftGo",
   "license": "MIT",
   "devDependencies": {
     "@tauri-apps/cli": "^2.8.0",

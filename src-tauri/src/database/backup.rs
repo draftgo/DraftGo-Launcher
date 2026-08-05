@@ -13,7 +13,7 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use tempfile::NamedTempFile;
 
-const CC_SWITCH_SQL_EXPORT_HEADER: &str = "-- CC Switch SQLite 导出";
+const DRAFTGO_LAUNCHER_SQL_EXPORT_HEADER: &str = "-- DraftGo Launcher SQLite 导出";
 
 /// `dump_sql` 会写出的 PRAGMA。其余 PRAGMA 一律拒绝——`temp_store_directory`
 /// 能把临时文件重定向到任意目录，`writable_schema` 能绕过 schema 完整性检查。
@@ -21,7 +21,7 @@ const IMPORT_ALLOWED_PRAGMAS: &[&str] = &["foreign_keys", "user_version"];
 
 /// 执行外部 SQL 期间的 authorizer：拒绝一切能**离开临时数据库文件**的动作。
 ///
-/// 头部校验（`validate_cc_switch_sql_export`）只比较一个注释前缀，任何人都能在
+/// 头部校验（`validate_draftgo_launcher_sql_export`）只比较一个注释前缀，任何人都能在
 /// 合法前缀后面接着写别的语句。`ATTACH DATABASE '/path/x.db'` 的副作用发生在
 /// `validate_basic_state` 之前，导入即使最终失败，文件也已经被创建；而 `settings`
 /// 表不在 `SYNC_SKIP_TABLES` / `SYNC_PRESERVE_TABLES` 之列，WebDAV/S3 同步会走
@@ -147,7 +147,7 @@ impl Database {
         preserve_tables: &[&str],
     ) -> Result<String, AppError> {
         let sql_content = sql_raw.trim_start_matches('\u{feff}');
-        Self::validate_cc_switch_sql_export(sql_content)?;
+        Self::validate_draftgo_launcher_sql_export(sql_content)?;
 
         // 导入前备份现有数据库
         let backup_path = self.backup_database_file()?;
@@ -219,16 +219,16 @@ impl Database {
         Ok(snapshot)
     }
 
-    fn validate_cc_switch_sql_export(sql: &str) -> Result<(), AppError> {
+    fn validate_draftgo_launcher_sql_export(sql: &str) -> Result<(), AppError> {
         let trimmed = sql.trim_start();
-        if trimmed.starts_with(CC_SWITCH_SQL_EXPORT_HEADER) {
+        if trimmed.starts_with(DRAFTGO_LAUNCHER_SQL_EXPORT_HEADER) {
             return Ok(());
         }
 
         Err(AppError::localized(
             "backup.sql.invalid_format",
-            "仅支持导入由 CC Switch 导出的 SQL 备份文件。",
-            "Only SQL backups exported by CC Switch are supported.",
+            "仅支持导入由 DraftGo Launcher 导出的 SQL 备份文件。",
+            "Only SQL backups exported by DraftGo Launcher are supported.",
         ))
     }
 
@@ -352,7 +352,7 @@ impl Database {
 
     /// 生成一致性快照备份，返回备份文件路径（不存在主库时返回 None）
     pub(crate) fn backup_database_file(&self) -> Result<Option<PathBuf>, AppError> {
-        let db_path = get_app_config_dir().join("cc-switch.db");
+        let db_path = get_app_config_dir().join("draftgo-launcher.db");
         if !db_path.exists() {
             return Ok(None);
         }
@@ -448,7 +448,7 @@ impl Database {
             .unwrap_or(0);
 
         output.push_str(&format!(
-            "-- CC Switch SQLite 导出\n-- 生成时间: {timestamp}\n-- user_version: {user_version}\n"
+            "-- DraftGo Launcher SQLite 导出\n-- 生成时间: {timestamp}\n-- user_version: {user_version}\n"
         ));
         output.push_str("PRAGMA foreign_keys=OFF;\n");
         output.push_str(&format!("PRAGMA user_version={user_version};\n"));
@@ -760,14 +760,14 @@ mod tests {
         ];
 
         for (label, template) in cases {
-            let target = std::env::temp_dir().join(format!("cc-switch-authorizer-{label}.sqlite"));
+            let target = std::env::temp_dir().join(format!("draftgo-launcher-authorizer-{label}.sqlite"));
             let _ = std::fs::remove_file(&target);
 
             // 合法的导出头 + 越界语句。头部校验只比前缀，这份输入过得了它，
             // 真正拦下来的必须是 authorizer。
             let malicious = format!(
                 "{}\n{}\n",
-                super::CC_SWITCH_SQL_EXPORT_HEADER,
+                super::DRAFTGO_LAUNCHER_SQL_EXPORT_HEADER,
                 template.replace("{path}", &target.display().to_string())
             );
 
@@ -906,12 +906,12 @@ mod tests {
     #[test]
     #[serial]
     fn periodic_maintenance_runs_even_when_auto_backup_disabled() -> Result<(), AppError> {
-        let old_test_home = std::env::var_os("CC_SWITCH_TEST_HOME");
+        let old_test_home = std::env::var_os("DRAFTGO_LAUNCHER_TEST_HOME");
         let test_home =
-            std::env::temp_dir().join("cc-switch-periodic-maintenance-backup-disabled-test");
+            std::env::temp_dir().join("draftgo-launcher-periodic-maintenance-backup-disabled-test");
         let _ = std::fs::remove_dir_all(&test_home);
         std::fs::create_dir_all(&test_home).expect("create test home");
-        std::env::set_var("CC_SWITCH_TEST_HOME", &test_home);
+        std::env::set_var("DRAFTGO_LAUNCHER_TEST_HOME", &test_home);
 
         let settings = AppSettings {
             backup_interval_hours: Some(0),
@@ -973,8 +973,8 @@ mod tests {
         assert_eq!(rollups, 1, "old request logs should be rolled up");
 
         match old_test_home {
-            Some(value) => std::env::set_var("CC_SWITCH_TEST_HOME", value),
-            None => std::env::remove_var("CC_SWITCH_TEST_HOME"),
+            Some(value) => std::env::set_var("DRAFTGO_LAUNCHER_TEST_HOME", value),
+            None => std::env::remove_var("DRAFTGO_LAUNCHER_TEST_HOME"),
         }
 
         Ok(())

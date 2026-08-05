@@ -129,8 +129,8 @@ export const codexProviderPresets: CodexProviderPreset[] = [
   {
     name: "Kimi",
     primePartner: true,
-    websiteUrl: "https://platform.kimi.com?aff=cc-switch",
-    apiKeyUrl: "https://platform.kimi.com/console/api-keys?aff=cc-switch",
+    websiteUrl: "https://platform.kimi.com?aff=draftgo-launcher",
+    apiKeyUrl: "https://platform.kimi.com/console/api-keys?aff=draftgo-launcher",
     auth: generateThirdPartyAuth(""),
     config: generateThirdPartyConfig(
       "kimi",
@@ -165,8 +165,8 @@ export const codexProviderPresets: CodexProviderPreset[] = [
   {
     name: "Kimi For Coding",
     primePartner: true,
-    websiteUrl: "https://www.kimi.com/code/?aff=cc-switch",
-    apiKeyUrl: "https://www.kimi.com/code/?aff=cc-switch",
+    websiteUrl: "https://www.kimi.com/code/?aff=draftgo-launcher",
+    apiKeyUrl: "https://www.kimi.com/code/?aff=draftgo-launcher",
     auth: generateThirdPartyAuth(""),
     config: generateThirdPartyConfig(
       "kimi_coding",
@@ -197,7 +197,7 @@ export const codexProviderPresets: CodexProviderPreset[] = [
   {
     name: "PackyCode",
     websiteUrl: "https://www.packyapi.ai",
-    apiKeyUrl: "https://www.packyapi.ai/register?aff=cc-switch",
+    apiKeyUrl: "https://www.packyapi.ai/register?aff=draftgo-launcher",
     category: "third_party",
     auth: generateThirdPartyAuth(""),
     config: generateThirdPartyConfig(
@@ -339,7 +339,7 @@ requires_openai_auth = true`,
   {
     name: "AIGoCode",
     websiteUrl: "https://aigocode.app",
-    apiKeyUrl: "https://aigocode.app/invite/CC-SWITCH",
+    apiKeyUrl: "https://aigocode.app/invite/DRAFTGO-LAUNCHER",
     category: "third_party",
     auth: generateThirdPartyAuth(""),
     config: generateThirdPartyConfig(
@@ -356,7 +356,7 @@ requires_openai_auth = true`,
   {
     name: "AICoding",
     websiteUrl: "https://aicoding.inc",
-    apiKeyUrl: "https://aicoding.inc/i/CCSWITCH",
+    apiKeyUrl: "https://aicoding.inc/i/DRAFTGO",
     auth: generateThirdPartyAuth(""),
     config: generateThirdPartyConfig(
       "aicoding",
@@ -388,7 +388,7 @@ requires_openai_auth = true`,
   {
     name: "APIKEY.FUN",
     websiteUrl: "https://apikey.fun",
-    apiKeyUrl: "https://apikey.fun/register?aff=CCSwitch",
+    apiKeyUrl: "https://apikey.fun/register?aff=DraftGo",
     category: "third_party",
     auth: generateThirdPartyAuth(""),
     config: `model_provider = "custom"
@@ -431,7 +431,7 @@ requires_openai_auth = true`,
     name: "TeamoRouter",
     websiteUrl: "https://teamorouter.com",
     apiKeyUrl:
-      "https://teamorouter.com/?utm_source=cc_switch&utm_medium=referral&utm_campaign=ai_directory",
+      "https://teamorouter.com/?utm_source=draftgo_launcher&utm_medium=referral&utm_campaign=ai_directory",
     category: "aggregator",
     auth: generateThirdPartyAuth(""),
     config: generateThirdPartyConfig(
@@ -462,9 +462,9 @@ requires_openai_auth = true`,
   {
     name: "火山Agentplan",
     websiteUrl:
-      "https://www.volcengine.com/activity/codingplan?ac=MMAP8JTTCAQ2&rc=6J6FV5N2&utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch",
+      "https://www.volcengine.com/activity/codingplan?ac=MMAP8JTTCAQ2&rc=6J6FV5N2&utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo",
     apiKeyUrl:
-      "https://www.volcengine.com/activity/codingplan?ac=MMAP8JTTCAQ2&rc=6J6FV5N2&utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch",
+      "https://www.volcengine.com/activity/codingplan?ac=MMAP8JTTCAQ2&rc=6J6FV5N2&utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo",
     auth: generateThirdPartyAuth(""),
     config: generateThirdPartyConfig(
       "ark_agentplan",
@@ -493,9 +493,9 @@ requires_openai_auth = true`,
   {
     name: "BytePlus",
     websiteUrl:
-      "https://www.byteplus.com/en/product/modelark?utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch",
+      "https://www.byteplus.com/en/product/modelark?utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo",
     apiKeyUrl:
-      "https://www.byteplus.com/en/product/modelark?utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch",
+      "https://www.byteplus.com/en/product/modelark?utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo",
     auth: generateThirdPartyAuth(""),
     config: generateThirdPartyConfig(
       "byteplus",
@@ -524,9 +524,9 @@ requires_openai_auth = true`,
   {
     name: "DouBaoSeed",
     websiteUrl:
-      "https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey?apikey=%7B%7D&utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch",
+      "https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey?apikey=%7B%7D&utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo",
     apiKeyUrl:
-      "https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey?apikey=%7B%7D&utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch",
+      "https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey?apikey=%7B%7D&utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo",
     auth: generateThirdPartyAuth(""),
     config: generateThirdPartyConfig(
       "doubaoseed",
@@ -604,7 +604,7 @@ requires_openai_auth = true`,
   {
     name: "NekoCode",
     websiteUrl: "https://nekocode.ai",
-    apiKeyUrl: "https://nekocode.ai?aff=CCSWITCH",
+    apiKeyUrl: "https://nekocode.ai?aff=DRAFTGO",
     category: "aggregator",
     auth: generateThirdPartyAuth(""),
     config: generateThirdPartyConfig(
@@ -666,7 +666,7 @@ requires_openai_auth = true`,
     nameKey: "providerForm.presets.ucloud",
     websiteUrl: "https://www.compshare.cn",
     apiKeyUrl:
-      "https://www.compshare.cn/coding-plan?ytag=GPU_YY_YX_git_cc-switch",
+      "https://www.compshare.cn/coding-plan?ytag=GPU_YY_YX_git_draftgo-launcher",
     auth: generateThirdPartyAuth(""),
     config: generateThirdPartyConfig(
       "compshare",
@@ -685,7 +685,7 @@ requires_openai_auth = true`,
     nameKey: "providerForm.presets.ucloudCoding",
     websiteUrl: "https://www.compshare.cn",
     apiKeyUrl:
-      "https://www.compshare.cn/coding-plan?ytag=GPU_YY_YX_git_cc-switch",
+      "https://www.compshare.cn/coding-plan?ytag=GPU_YY_YX_git_draftgo-launcher",
     auth: generateThirdPartyAuth(""),
     config: generateThirdPartyConfig(
       "compshare_coding",
@@ -756,7 +756,7 @@ requires_openai_auth = true`,
   {
     name: "RightCode",
     websiteUrl: "https://www.rightapi.ai",
-    apiKeyUrl: "https://www.rightapi.ai/register?aff=CCSWITCH",
+    apiKeyUrl: "https://www.rightapi.ai/register?aff=DRAFTGO",
     auth: generateThirdPartyAuth(""),
     config: generateThirdPartyConfig(
       "rightcode",
@@ -789,7 +789,7 @@ requires_openai_auth = true`,
   {
     name: "Cubence",
     websiteUrl: "https://cubence.com",
-    apiKeyUrl: "https://cubence.com/signup?code=CCSWITCH&source=ccs",
+    apiKeyUrl: "https://cubence.com/signup?code=DRAFTGO&source=ccs",
     auth: generateThirdPartyAuth(""),
     config: generateThirdPartyConfig(
       "cubence",
@@ -811,7 +811,7 @@ requires_openai_auth = true`,
   {
     name: "CrazyRouter",
     websiteUrl: "https://www.crazyrouter.com",
-    apiKeyUrl: "https://www.crazyrouter.com/register?aff=OZcm&ref=cc-switch",
+    apiKeyUrl: "https://www.crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher",
     auth: generateThirdPartyAuth(""),
     config: generateThirdPartyConfig(
       "crazyrouter",
@@ -862,7 +862,7 @@ requires_openai_auth = true`,
     name: "SudoCode.chat",
     websiteUrl: "https://sudocode.chat",
     apiKeyUrl:
-      "https://sudocode.chat/sign-up?aff=CC-SWITCH&utm_source=cc-switch&utm_medium=sponsor&utm_campaign=ccswitch",
+      "https://sudocode.chat/sign-up?aff=DRAFTGO-LAUNCHER&utm_source=draftgo-launcher&utm_medium=sponsor&utm_campaign=draftgo",
     category: "third_party",
     auth: generateThirdPartyAuth(""),
     config: `model_provider = "custom"

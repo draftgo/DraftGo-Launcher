@@ -1,17 +1,17 @@
 [package]
-name = "cc-switch"
-version = "3.19.1"
+name = "draftgo-launcher"
+version = "1.0.0"
 description = "All-in-One Assistant for Claude Code, Codex & Gemini CLI"
-authors = ["Jason Young"]
+authors = ["DraftGo"]
 license = "MIT"
-repository = "https://github.com/farion1231/cc-switch"
+repository = "https://github.com/draftgo/DraftGo-Launcher"
 edition = "2021"
 rust-version = "1.85.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [lib]
-name = "cc_switch_lib"
+name = "draftgo_launcher_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 doctest = false
 

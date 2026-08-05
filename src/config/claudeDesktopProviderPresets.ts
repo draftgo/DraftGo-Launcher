@@ -157,7 +157,7 @@ export const claudeDesktopProviderPresets: ClaudeDesktopProviderPreset[] = [
   {
     name: "Kimi",
     primePartner: true,
-    websiteUrl: "https://platform.kimi.com?aff=cc-switch",
+    websiteUrl: "https://platform.kimi.com?aff=draftgo-launcher",
     category: "cn_official",
     baseUrl: "https://api.moonshot.cn/anthropic",
     mode: "proxy",
@@ -173,7 +173,7 @@ export const claudeDesktopProviderPresets: ClaudeDesktopProviderPreset[] = [
   {
     name: "Kimi For Coding",
     primePartner: true,
-    websiteUrl: "https://www.kimi.com/code/?aff=cc-switch",
+    websiteUrl: "https://www.kimi.com/code/?aff=draftgo-launcher",
     category: "cn_official",
     baseUrl: "https://api.kimi.com/coding/",
     mode: "proxy",
@@ -185,7 +185,7 @@ export const claudeDesktopProviderPresets: ClaudeDesktopProviderPreset[] = [
   {
     name: "PackyCode",
     websiteUrl: "https://www.packyapi.ai",
-    apiKeyUrl: "https://www.packyapi.ai/register?aff=cc-switch",
+    apiKeyUrl: "https://www.packyapi.ai/register?aff=draftgo-launcher",
     category: "third_party",
     baseUrl: "https://www.packyapi.ai",
     mode: "direct",
@@ -304,7 +304,7 @@ export const claudeDesktopProviderPresets: ClaudeDesktopProviderPreset[] = [
   {
     name: "AIGoCode",
     websiteUrl: "https://aigocode.app",
-    apiKeyUrl: "https://aigocode.app/invite/CC-SWITCH",
+    apiKeyUrl: "https://aigocode.app/invite/DRAFTGO-LAUNCHER",
     category: "third_party",
     baseUrl: "https://api.aigocode.app",
     mode: "direct",
@@ -319,7 +319,7 @@ export const claudeDesktopProviderPresets: ClaudeDesktopProviderPreset[] = [
   {
     name: "AICoding",
     websiteUrl: "https://aicoding.inc",
-    apiKeyUrl: "https://aicoding.inc/i/CCSWITCH",
+    apiKeyUrl: "https://aicoding.inc/i/DRAFTGO",
     category: "third_party",
     baseUrl: "https://api.aicoding.inc",
     mode: "direct",
@@ -347,7 +347,7 @@ export const claudeDesktopProviderPresets: ClaudeDesktopProviderPreset[] = [
   {
     name: "APIKEY.FUN",
     websiteUrl: "https://apikey.fun",
-    apiKeyUrl: "https://apikey.fun/register?aff=CCSwitch",
+    apiKeyUrl: "https://apikey.fun/register?aff=DraftGo",
     category: "third_party",
     baseUrl: "https://api.apikey.fun",
     mode: "direct",
@@ -388,7 +388,7 @@ export const claudeDesktopProviderPresets: ClaudeDesktopProviderPreset[] = [
     name: "TeamoRouter",
     websiteUrl: "https://teamorouter.com",
     apiKeyUrl:
-      "https://teamorouter.com/?utm_source=cc_switch&utm_medium=referral&utm_campaign=ai_directory",
+      "https://teamorouter.com/?utm_source=draftgo_launcher&utm_medium=referral&utm_campaign=ai_directory",
     category: "aggregator",
     baseUrl: "https://api.teamorouter.com",
     mode: "direct",
@@ -414,9 +414,9 @@ export const claudeDesktopProviderPresets: ClaudeDesktopProviderPreset[] = [
   {
     name: "火山Agentplan",
     websiteUrl:
-      "https://www.volcengine.com/activity/codingplan?ac=MMAP8JTTCAQ2&rc=6J6FV5N2&utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch",
+      "https://www.volcengine.com/activity/codingplan?ac=MMAP8JTTCAQ2&rc=6J6FV5N2&utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo",
     apiKeyUrl:
-      "https://www.volcengine.com/activity/codingplan?ac=MMAP8JTTCAQ2&rc=6J6FV5N2&utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch",
+      "https://www.volcengine.com/activity/codingplan?ac=MMAP8JTTCAQ2&rc=6J6FV5N2&utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo",
     category: "cn_official",
     baseUrl: "https://ark.cn-beijing.volces.com/api/coding",
     mode: "proxy",
@@ -434,9 +434,9 @@ export const claudeDesktopProviderPresets: ClaudeDesktopProviderPreset[] = [
   {
     name: "BytePlus",
     websiteUrl:
-      "https://www.byteplus.com/en/product/modelark?utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch",
+      "https://www.byteplus.com/en/product/modelark?utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo",
     apiKeyUrl:
-      "https://www.byteplus.com/en/product/modelark?utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch",
+      "https://www.byteplus.com/en/product/modelark?utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo",
     category: "cn_official",
     baseUrl: "https://ark.ap-southeast.bytepluses.com/api/coding",
     mode: "proxy",
@@ -454,9 +454,9 @@ export const claudeDesktopProviderPresets: ClaudeDesktopProviderPreset[] = [
   {
     name: "DouBaoSeed",
     websiteUrl:
-      "https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey?apikey=%7B%7D&utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch",
+      "https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey?apikey=%7B%7D&utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo",
     apiKeyUrl:
-      "https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey?apikey=%7B%7D&utm_campaign=hw&utm_content=ccswitch&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=ccswitch",
+      "https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey?apikey=%7B%7D&utm_campaign=hw&utm_content=draftgo&utm_medium=devrel_tool_web&utm_source=OWO&utm_term=draftgo",
     category: "cn_official",
     baseUrl: "https://ark.cn-beijing.volces.com/api/compatible",
     mode: "proxy",
@@ -510,7 +510,7 @@ export const claudeDesktopProviderPresets: ClaudeDesktopProviderPreset[] = [
   {
     name: "NekoCode",
     websiteUrl: "https://nekocode.ai",
-    apiKeyUrl: "https://nekocode.ai?aff=CCSWITCH",
+    apiKeyUrl: "https://nekocode.ai?aff=DRAFTGO",
     category: "aggregator",
     baseUrl: "https://nekocode.ai",
     mode: "direct",
@@ -552,7 +552,7 @@ export const claudeDesktopProviderPresets: ClaudeDesktopProviderPreset[] = [
     nameKey: "providerForm.presets.ucloud",
     websiteUrl: "https://www.compshare.cn",
     apiKeyUrl:
-      "https://www.compshare.cn/coding-plan?ytag=GPU_YY_YX_git_cc-switch",
+      "https://www.compshare.cn/coding-plan?ytag=GPU_YY_YX_git_draftgo-launcher",
     category: "aggregator",
     baseUrl: "https://api.modelverse.cn",
     mode: "direct",
@@ -569,7 +569,7 @@ export const claudeDesktopProviderPresets: ClaudeDesktopProviderPreset[] = [
     nameKey: "providerForm.presets.ucloudCoding",
     websiteUrl: "https://www.compshare.cn",
     apiKeyUrl:
-      "https://www.compshare.cn/coding-plan?ytag=GPU_YY_YX_git_cc-switch",
+      "https://www.compshare.cn/coding-plan?ytag=GPU_YY_YX_git_draftgo-launcher",
     category: "aggregator",
     baseUrl: "https://cp.compshare.cn",
     mode: "direct",
@@ -631,7 +631,7 @@ export const claudeDesktopProviderPresets: ClaudeDesktopProviderPreset[] = [
   {
     name: "RightCode",
     websiteUrl: "https://www.rightapi.ai",
-    apiKeyUrl: "https://www.rightapi.ai/register?aff=CCSWITCH",
+    apiKeyUrl: "https://www.rightapi.ai/register?aff=DRAFTGO",
     category: "third_party",
     baseUrl: "https://www.rightapi.ai/claude",
     mode: "direct",
@@ -659,7 +659,7 @@ export const claudeDesktopProviderPresets: ClaudeDesktopProviderPreset[] = [
   {
     name: "Cubence",
     websiteUrl: "https://cubence.com",
-    apiKeyUrl: "https://cubence.com/signup?code=CCSWITCH&source=ccs",
+    apiKeyUrl: "https://cubence.com/signup?code=DRAFTGO&source=ccs",
     category: "third_party",
     baseUrl: "https://api.cubence.com",
     mode: "direct",
@@ -679,7 +679,7 @@ export const claudeDesktopProviderPresets: ClaudeDesktopProviderPreset[] = [
   {
     name: "CrazyRouter",
     websiteUrl: "https://www.crazyrouter.com",
-    apiKeyUrl: "https://www.crazyrouter.com/register?aff=OZcm&ref=cc-switch",
+    apiKeyUrl: "https://www.crazyrouter.com/register?aff=OZcm&ref=draftgo-launcher",
     category: "third_party",
     baseUrl: "https://cn.crazyrouter.com",
     mode: "direct",
@@ -723,7 +723,7 @@ export const claudeDesktopProviderPresets: ClaudeDesktopProviderPreset[] = [
     name: "SudoCode.chat",
     websiteUrl: "https://sudocode.chat",
     apiKeyUrl:
-      "https://sudocode.chat/sign-up?aff=CC-SWITCH&utm_source=cc-switch&utm_medium=sponsor&utm_campaign=ccswitch",
+      "https://sudocode.chat/sign-up?aff=DRAFTGO-LAUNCHER&utm_source=draftgo-launcher&utm_medium=sponsor&utm_campaign=draftgo",
     category: "third_party",
     baseUrl: "https://api.sudocode.chat",
     mode: "direct",
