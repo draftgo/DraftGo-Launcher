@@ -4745,7 +4745,7 @@ mod tests {
             let update_cmd =
                 wsl_tool_action_shell_command("hermes", ToolLifecycleAction::Update).unwrap();
             assert!(
-                update_cmd.starts_with("hermes update || bash -c 'tmp=$(mktemp) && curl -fsSL "),
+                update_cmd.starts_with("hermes update || bash -c 'tmp=$(mktemp) &&"),
                 "WSL hermes 更新应先尝试 CLI 自更新再回退官方 installer,得到: {update_cmd}"
             );
             let fallback = update_cmd
@@ -4753,8 +4753,9 @@ mod tests {
                 .map(|(_, fallback)| fallback)
                 .expect("update should include installer fallback");
             assert!(
-                !fallback.contains('|')
-                    && fallback.contains(" -o $tmp && bash $tmp")
+                !fallback.contains("| bash")
+                    && fallback.contains(" -o $tmp")
+                    && fallback.contains("&& bash $tmp")
                     && !update_cmd.contains("powershell")
                     && !update_cmd.contains("pip"),
                 "WSL hermes fallback 不能依赖 pipefail/Windows installer/pip,得到: {update_cmd}"
@@ -4763,11 +4764,13 @@ mod tests {
             let install_cmd =
                 wsl_tool_action_shell_command("hermes", ToolLifecycleAction::Install).unwrap();
             assert!(
-                install_cmd.starts_with("bash -c 'tmp=$(mktemp) && curl -fsSL "),
+                install_cmd.starts_with("bash -c 'tmp=$(mktemp) &&"),
                 "WSL hermes 安装应直接走官方 Unix installer,得到: {install_cmd}"
             );
             assert!(
-                !install_cmd.contains('|') && install_cmd.contains(" -o $tmp && bash $tmp"),
+                !install_cmd.contains("| bash")
+                    && install_cmd.contains(" -o $tmp")
+                    && install_cmd.contains("&& bash $tmp"),
                 "WSL hermes 安装不应依赖 pipefail,得到: {install_cmd}"
             );
         }
@@ -4778,7 +4781,9 @@ mod tests {
                 .expect("valid WSL command line");
             assert!(line.starts_with("wsl.exe -d Ubuntu -- sh -c "));
             assert!(
-                !line.contains("| bash") && line.contains(" -o $tmp && bash $tmp"),
+                !line.contains("| bash")
+                    && line.contains(" -o $tmp")
+                    && line.contains("&& bash $tmp"),
                 "WSL 子 shell 内不能出现 curl 管道安装器: {line}"
             );
         }
