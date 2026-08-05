@@ -444,7 +444,6 @@ export function GrokBuildProviderForm({
             presetCategoryLabels={presetCategoryLabels}
             onPresetChange={handlePresetChange}
             category={category}
-            officialOnly
           />
         )}
 
