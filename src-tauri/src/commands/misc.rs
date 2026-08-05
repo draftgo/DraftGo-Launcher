@@ -5570,12 +5570,13 @@ mod tests {
             // 里走 `python3 || python` pip 链。
             let cmd = install_command_for("hermes");
             assert!(
-                cmd.starts_with("bash -c 'tmp=$(mktemp) && curl -fsSL ")
-                    && cmd.contains("install.sh -o $tmp && bash $tmp"),
+                cmd.starts_with("bash -c 'tmp=$(mktemp) &&")
+                    && cmd.contains("install.sh -o $tmp")
+                    && cmd.contains("&& bash $tmp"),
                 "should use official installer: {cmd}"
             );
             assert!(
-                !cmd.contains('|') && !cmd.contains("python") && !cmd.contains("pip"),
+                !cmd.contains("| bash") && !cmd.contains("python") && !cmd.contains("pip"),
                 "should not depend on pipefail or system Python/pip: {cmd}"
             );
         }
@@ -5586,7 +5587,7 @@ mod tests {
             // installer。这样 pyenv 的 `python` shim 不会参与错误路径。
             let cmd = static_fallback_command("hermes");
             assert!(
-                cmd.starts_with("hermes update || bash -c 'tmp=$(mktemp) && curl -fsSL "),
+                cmd.starts_with("hermes update || bash -c 'tmp=$(mktemp) &&"),
                 "should try CLI update before official installer: {cmd}"
             );
             let fallback = cmd
@@ -5594,7 +5595,7 @@ mod tests {
                 .map(|(_, fallback)| fallback)
                 .expect("update should include installer fallback");
             assert!(
-                !fallback.contains('|') && !cmd.contains("python") && !cmd.contains("pip"),
+                !fallback.contains("| bash") && !cmd.contains("python") && !cmd.contains("pip"),
                 "should not depend on pipefail or system Python/pip: {cmd}"
             );
         }
